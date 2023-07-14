@@ -3,8 +3,14 @@ from typing import Tuple, List
 import csv
 
 
-PATH = 'data'
-HEADER_ROW = ['level','hanja','rep_h','rep_m','hms(>1)']
+PATH_DATA = './data'
+PATH_TXT = './data/txt'
+HEADER_ROW = ['level', 'hanja','mean','pron','hms']
+HANJA_IDX = HEADER_ROW.index('hanja')
+MEAN_IDX = HEADER_ROW.index('mean')
+PRON_IDX = HEADER_ROW.index('pron')
+HMS_IDX = HEADER_ROW.index('hms')
+LEVEL_IDX = HEADER_ROW.index('level')
 
 
 def get_filenames(directory):
@@ -62,24 +68,32 @@ def get_raw_and_return_each_hm(s: str):
     return result
 
 
-# lv, hanja, rep_h, rep_m, all_hms
+# lv, hanja, mean, pron, all_hms
 def make_tuple(h_list: list) -> List[Tuple]:
     result = []
     for line in h_list:
         lv, hanja, raw_str = line
         hms = get_raw_and_return_each_hm(raw_str)
-        rep_h, rep_m = hms[0]
+        mean, pron = hms[0]
         all_hms_list = []
         for hm in hms:
             hm_combo = ' '.join(hm)
             all_hms_list.append(hm_combo)
             all_hms = '|'.join(all_hms_list)
-        result.append((lv, hanja, rep_h, rep_m, all_hms))
+        # result.append((hanja, mean, pron, all_hms, lv))
+        # TODO: HEADER_ROW에 따라 자동으로 바뀌게 만들기 => 완료.
+        li = ['', '', '', '', '']
+        li[HANJA_IDX] = hanja
+        li[MEAN_IDX] = mean
+        li[PRON_IDX] = pron
+        li[HMS_IDX] = all_hms
+        li[LEVEL_IDX] = lv.ljust(3, '_')
+        result.append(li)
     return result
 
 
 def sort_ganadara(h_tuple_list: List[Tuple]) -> List[Tuple]:
-    return sorted(h_tuple_list, key=lambda x: x[3])
+    return sorted(h_tuple_list, key=lambda x: x[PRON_IDX])
 
 
 def save_file(h_tuple_list: List[Tuple]):
