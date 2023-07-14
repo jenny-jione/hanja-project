@@ -31,18 +31,11 @@ def read_all_txt_files_and_get_info(levels_sorted: list):
             lines = f.readlines()
             h_list = [line.strip() for line in lines]
 
-            if '3' in lv:        
-                # h, m is in diffrent line     
-                for i in range(0, len(h_list), 2):
-                    if i+1 < len(h_list):
-                        pair = (lv, h_list[i], h_list[i+1])
-                    result.append(pair)
-            else:
-                for hm in h_list:
-                    lst = hm.split(' ', 1)
-                    lst.insert(0, lv)
-                    pair = tuple(lst)
-                    result.append(pair)
+            for hm in h_list:
+                lst = hm.split(' ', 1)
+                lst.insert(0, lv)
+                pair = tuple(lst)
+                result.append(pair)
     return result
 
 
