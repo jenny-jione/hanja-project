@@ -27,7 +27,7 @@ def get_filenames(directory):
 def read_all_txt_files_and_get_info(levels_sorted: list):
     result = []
     for lv in levels_sorted:
-        with open(f'./{PATH}/h{lv}.txt', 'r') as f:
+        with open(f'{PATH_TXT}/h{lv}.txt', 'r') as f:
             lines = f.readlines()
             h_list = [line.strip() for line in lines]
 
@@ -97,7 +97,7 @@ def sort_ganadara(h_tuple_list: List[Tuple]) -> List[Tuple]:
 
 
 def save_file(h_tuple_list: List[Tuple]):
-    with open(f'./{PATH}/sorted_improved.csv', 'w') as file:
+    with open(f'{PATH_DATA}/data.csv', 'w') as file:
         wr = csv.writer(file)
         wr.writerow(HEADER_ROW)
         for h in h_tuple_list:
@@ -106,7 +106,7 @@ def save_file(h_tuple_list: List[Tuple]):
 
 
 if __name__ == '__main__':
-    levels = get_filenames(PATH)
+    levels = get_filenames(PATH_TXT)
     levels_sorted = sorted(levels, reverse=True)
     h_list = read_all_txt_files_and_get_info(levels_sorted)
     h_tuple_list = make_tuple(h_list)
