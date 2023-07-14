@@ -43,7 +43,7 @@ def separate_hm(hm: str) -> Tuple[str, str]:
     tmp = hm.split()
     h_raw, m_raw = tmp[:-1], tmp[-1]
     h = ''.join(h_raw)
-    m = m_raw.split('(')[0].split(':')[0]
+    m = m_raw.split('(')[0].split(':')[0].split('[')[0]
     return h, m
 
 
