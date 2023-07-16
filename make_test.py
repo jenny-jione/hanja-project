@@ -1,3 +1,4 @@
+# 입력한 초성에 해당하는 운을 가진 한자만 시험지 만드는 코드: ㄱ -> 가, 각, 고, ...
 import csv
 import random
 from datetime import datetime
