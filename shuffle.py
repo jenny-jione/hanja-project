@@ -19,12 +19,15 @@ def load_file():
 
 
 def write_line(level: str, li: list):
-    sub_str = '\t\t\t\t\t\t\t\t'.join(li)
-    return level + '  ' + sub_str + '\n'
-    # TODO: 훈음이 아무리 길어도 정렬해서 출력할 수 있게 하기
-    # sub_str = f"{li[0].ljust(10, ' ')} {li[1].rjust(10, ' ')} \n"
-    # return level + ' ' + sub_str
-
+    # sub_str = '\t\t\t\t\t\t\t\t'.join(li)
+    # return level + '  ' + sub_str + '\n'
+    # TODO: 훈음이 아무리 길어도 정렬해서 출력할 수 있게 하기 -> 진 행 중 ㅠ
+    hms: str = li[1]
+    new_hms: str = hms.replace(' ', '  ')
+    space = 16 - len(li[0]) - len(new_hms)
+    space2 = new_hms.count('/')
+    sub_str = li[0] + ' '*space*2 + new_hms + ' '*space2 + str(space2) + '\n'
+    return level + ' ' + sub_str
 
 def make_question_answer(h_list: list):
     random.shuffle(h_list)
@@ -34,10 +37,10 @@ def make_question_answer(h_list: list):
         open(f'{PATH_TEST}/{fnow}_mh.txt', 'w') as f2:
             for h in h_list:
                 lv = h[LEVEL_IDX]
-                q = h[HANJA_IDX]
-                a = h[HMS_IDX]
-                f1.write(write_line(lv, [q, a]))
-                f2.write(write_line(lv, [a, q]))
+                hanja = h[HANJA_IDX]
+                hms = h[HMS_IDX]
+                f1.write(write_line(lv, [hanja, hms]))
+                f2.write(write_line(lv, [hms, hanja]))
     print(f'{len(h_list)} questions completed.')
 
 
