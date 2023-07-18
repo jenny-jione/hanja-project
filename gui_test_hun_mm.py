@@ -1,21 +1,11 @@
-import tkinter as tk
-from time import sleep
-
-window = tk.Tk()
-window_width = 100
-window_height = 120
-window_pos_x = 1800
-window_pos_y = 1000
-window.geometry("{}x{}+{}+{}".format(window_width, window_height, window_pos_x, window_pos_y))
-window.resizable(False, False)
-window.title("Tkinter: Test")
-
-
+# import tkinter as tk
+from tkinter import font
+from gui_base import *
 from modules.load import load_file
-li = load_file()
-
 from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
 import random
+
+li = load_file()
 random.shuffle(li)
 
 click = 0
@@ -29,29 +19,40 @@ def update_labels():
             label2.config(text='')
         else:
             cur_idx = click//2 - 1
-            # label2.config(text=li[cur_idx][HMS_IDX])
             label2.config(text=li[cur_idx][HANJA_IDX])
-        # label1.config(text=li[cur_idx][HANJA_IDX])
         label1.config(text=li[cur_idx][HMS_IDX])
         label_lv.config(text=li[cur_idx][LEVEL_IDX])
+        label_cnt.config(text=cur_idx+1)
+        label_new.config(text='/ ' + str(len(li)))
     else:
         label1.config(text='')
-        label2.config(text='End')
+        label2.config(text='끝! 수고하셨습니다!!')
         label_lv.config(text='')
         label_cnt.config(text='')
+        label_new.config(text='')
 
 
-label1 = tk.Label(window, text=" ", anchor="w")
-label2 = tk.Label(window, text=" ")
+LABEL1_FONT_SIZE = 50
+LABEL2_FONT_SIZE = 200
+label1_font = font.Font(size=LABEL1_FONT_SIZE)
+label2_font = font.Font(size=LABEL2_FONT_SIZE)
+label1 = tk.Label(window, text=" ", anchor="w", font=label1_font)
+label2 = tk.Label(window, text=" ", font=label2_font)
 label_lv = tk.Label(window, text=" ")
 label_cnt = tk.Label(window, text=" ")
+label_new = tk.Label(window, text=" ")
 
-b1 = tk.Button(window, text='btn', command=update_labels)
+b1 = tk.Button(window, text='다음', command=update_labels)
 
-label1.pack()
-label2.pack()
-label_lv.pack()
-label_cnt.pack()
-b1.pack()
+# Set the column and row configurations for center alignment
+window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
+window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
+
+label1.grid(row=0, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
+label2.grid(row=1, column=0, columnspan=2)
+label_lv.grid(row=2, column=0, columnspan=2)
+label_cnt.grid(row=3, column=0, sticky="e")  # Use sticky="e" for right-align
+label_new.grid(row=3, column=1, sticky="w")  # Use sticky="w" for left-align
+b1.grid(row=4, column=0, columnspan=2)
 
 window.mainloop()
