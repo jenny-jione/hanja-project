@@ -21,8 +21,8 @@ def setting(type: str):
         screen_height = window.winfo_screenheight()
         pos_x = (screen_width - width) // 2
         pos_y = (screen_height - height) // 2
-        large_font_size = 50
-        normal_font_size = 15
+        large_font_size = 100
+        normal_font_size = 20
     else:
         width = 500
         height = 200
@@ -38,6 +38,7 @@ large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 # window.resizable(False, False)
+# window.title("Tkinter: 한자 3급 합격 기원🍀")
 window.title("tk")
 
 # TODO: gui_study.py, gui_test_*.py에서 공통으로 사용하는 부분이 너무 많은데
