@@ -1,22 +1,28 @@
 import tkinter as tk
 
 window = tk.Tk()
-window_width = 1000
-window_height = 400
 
-# Get screen width and height
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
+def setting(type: str):
+    global width, height, pos_x, pos_y, large_font_size, normal_font_size
+    if type == 'linux':
+        width = 100
+        height = 130
+        pos_x = 1900
+        pos_y = 1000
+        large_font_size = 12
+        normal_font_size = 8
+    elif type == 'mac':
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+        pos_x = (screen_width - width) // 2
+        pos_y = (screen_height - height) // 2
+        large_font_size = 50
+        normal_font_size = 15
 
-# Calculate position for the window to be centered
-window_pos_x = (screen_width - window_width) // 2
-window_pos_y = (screen_height - window_height) // 2
-
-# window_pos_x = 800
-# window_pos_y = 500
-window.geometry("{}x{}+{}+{}".format(window_width, window_height, window_pos_x, window_pos_y))
-window.resizable(False, False)
-window.title("Tkinter: 한자 3급 합격 기원🍀")
+setting('linux')
+window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
+# window.resizable(False, False)
+window.title("tk")
 
 # TODO: gui_study.py, gui_test_*.py에서 공통으로 사용하는 부분이 너무 많은데
 # 이것들도 다 이 base 파일에 넣을 수 있게 하기!!
