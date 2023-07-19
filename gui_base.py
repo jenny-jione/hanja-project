@@ -1,6 +1,9 @@
 import tkinter as tk
+from modules.load import load_file
+from tkinter import font
 
 window = tk.Tk()
+li = load_file()
 
 def setting(type: str):
     global width, height, pos_x, pos_y, large_font_size, normal_font_size
@@ -12,14 +15,27 @@ def setting(type: str):
         large_font_size = 12
         normal_font_size = 8
     elif type == 'mac':
+        width = 500
+        height = 300
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         pos_x = (screen_width - width) // 2
         pos_y = (screen_height - height) // 2
         large_font_size = 50
         normal_font_size = 15
+    else:
+        width = 500
+        height = 200
+        screen_width = window.winfo_screenwidth()
+        screen_height = window.winfo_screenheight()
+        pos_x = (screen_width - width) // 2
+        pos_y = (screen_height - height) // 2
+        large_font_size = 20
+        normal_font_size = 5
 
 setting('linux')
+large_font = font.Font(size=large_font_size)
+normal_font = font.Font(size=normal_font_size)
 window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 # window.resizable(False, False)
 window.title("tk")
