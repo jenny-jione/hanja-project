@@ -1,5 +1,6 @@
 from gui_base import *
 from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
+from modules.refactor import refactor_data
 import random
 
 class ReadingTest:
@@ -48,7 +49,7 @@ class ReadingTest:
             han = li[idx][HANJA_IDX]
             self.label_han.config(text=han)
             level_raw = li[idx][LEVEL_IDX]
-            level = self.refactor_data(level_raw)
+            level = refactor_data(level_raw)
             self.label_lev.config(text=level)
             self.label_cnt.config(text=idx+1)
             self.label_new.config(text='/ ' + str(len(li)))
@@ -61,15 +62,6 @@ class ReadingTest:
             self.label_new.config(text='')
             self.b_next.grid_forget()
             self.b_prev.grid_forget()
-    
-    def refactor_data(self, input_str: str):
-        PREFIX = '준'
-        SUFFIX = '급'
-        TARGET_SUBSTRING = 'ii'
-        processed_str = input_str.strip('__')
-        if processed_str.endswith(TARGET_SUBSTRING):
-            processed_str = PREFIX + processed_str.strip('ii')
-        return processed_str + SUFFIX
 
 
 test_base = ReadingTest()
