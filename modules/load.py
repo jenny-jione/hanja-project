@@ -1,8 +1,8 @@
 import csv
 
 def load_file():
-    # with open('./data/data_part.csv', 'r') as f:
-    with open('./data/data_sound.csv', 'r') as f:
+    with open('./data/data_today.csv', 'r') as f:
+    # with open('./data/data_sound.csv', 'r') as f:
         rdr = csv.reader(f)
         next(rdr)
         
