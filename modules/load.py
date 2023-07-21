@@ -32,6 +32,17 @@ def load_file__new():
     return result
 
 
+def load_file__part():
+    with open('./data/data_today_wrong.csv', 'r') as f:
+        rdr = csv.reader(f)
+        next(rdr)
+        
+        tuple_list = []
+        for row in rdr:
+            tuple_list.append(tuple(row))
+    return tuple_list
+
+
 """
 TODO
 1. gui에서 범위 선택할 수 있게 하기
