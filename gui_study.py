@@ -28,15 +28,11 @@ def update_labels():
         label_new.config(text='')
 
 
-LABEL1_FONT_SIZE = 50
-LABEL2_FONT_SIZE = 15
-label1_font = font.Font(size=LABEL1_FONT_SIZE)
-label2_font = font.Font(size=LABEL2_FONT_SIZE)
-label1 = tk.Label(window, text=" ", anchor="w", font=label1_font)
-label2 = tk.Label(window, text=" ", font=label2_font)
-label_lv = tk.Label(window, text=" ")
-label_cnt = tk.Label(window, text=" ")
-label_new = tk.Label(window, text=" ")
+label1 = tk.Label(window, text=" ", anchor="w", font=large_font)
+label2 = tk.Label(window, text=" ", font=normal_font)
+label_lv = tk.Label(window, text=" ", font=normal_font)
+label_cnt = tk.Label(window, text=" ", font=normal_font)
+label_new = tk.Label(window, text=" ", font=normal_font)
 
 b1 = tk.Button(window, text='다음', command=update_labels)
 
