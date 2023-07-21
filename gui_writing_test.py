@@ -56,7 +56,7 @@ class WritingTest:
             self.b_prev.grid(row=4, column=0)
         elif self.click > len(li):
             self.label_han.config(text='')
-            self.label_kor.config(text='End')
+            self.label_kor.config(text=closing_remark)
             self.label_lev.config(text='')
             self.label_cnt.config(text='')
             self.label_new.config(text='')
