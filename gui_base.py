@@ -9,10 +9,10 @@ def setting(type: str):
     global width, height, pos_x, pos_y, large_font_size, normal_font_size
     if type == 'linux':
         width = 100
-        height = 130
+        height = 140
         pos_x = 1900
         pos_y = 1000
-        large_font_size = 12
+        large_font_size = 15
         normal_font_size = 8
     elif type == 'mac':
         width = 500
