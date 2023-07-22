@@ -32,6 +32,8 @@ class ReadingTest:
         response = self.entry.get()
         han, kor, lev = self.get_data()
         f_str = f'[{str(self.cur_idx+1)}/{len(li)}] '
+        # TODO: 갚을/알릴 보 같은 경우에는 하나만 써도 맞게 하기!
+        # TODO: 회복할 복|다시 부 같은 경우에는 둘 다 써야 맞게 하기. 근데 순서는 달라도 됨
         if kor == response:
             f_str = f_str + 'right!'
         else:
@@ -59,6 +61,7 @@ class ReadingTest:
             for res in self.result:
                 print(res)
             print(f'result:{len(li)-len(self.result)}/{len(li)}')
+            # TODO: 100점 만점 기준으로도 보여주기
             self.save_result()
             self.remove_labels()
     
@@ -77,6 +80,7 @@ class ReadingTest:
     def remove_labels(self):
         self.label_han.grid_remove()
         self.entry.grid_forget()
+        # TODO: end 보여주기 (closing_remark)
     
     def get_data(self):
         kor = li[self.cur_idx][HMS_IDX]
