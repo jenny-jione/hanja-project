@@ -48,5 +48,3 @@ window.title(window_title)
 
 # TODO: gui_study.py, gui_test_*.py에서 공통으로 사용하는 부분이 너무 많은데
 # 이것들도 다 이 base 파일에 넣을 수 있게 하기!!
-# TODO: End, '끝, 수고하셨습니다!!' linux, mac 따로 설정하기. => 완료.
-# TODO: title도! => 완료.

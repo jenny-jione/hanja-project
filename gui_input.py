@@ -48,8 +48,6 @@ class ReadingTest:
         self.entry.delete(0, tk.END)
         self.update_labels()
 
-    # TODO: 0부터 시작하는게 아니라 idx가 1부터 시작돼서..
-    #  맨 첫번째 있는 한자는 아예 건너뛰는 현상 고치기 => 완료!
     def update_labels(self):
         self.cur_idx += 1
         if self.cur_idx > 0:

@@ -70,8 +70,6 @@ def make_tuple(h_list: list) -> List[Tuple]:
             hm_combo = ' '.join(hm)
             all_hms_list.append(hm_combo)
             all_hms = '|'.join(all_hms_list)
-        # result.append((hanja, mean, pron, all_hms, lv))
-        # TODO: HEADER_ROW에 따라 자동으로 바뀌게 만들기 => 완료.
         li = ['', '', '', '', '']
         li[HANJA_IDX] = hanja
         li[MEAN_IDX] = mean
