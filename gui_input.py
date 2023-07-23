@@ -58,10 +58,21 @@ class ReadingTest:
         else:
             for res in self.result:
                 print(res)
-            print(f'result:{len(li)-len(self.result)}/{len(li)}')
-            # TODO: 100점 만점 기준으로도 보여주기
-            self.save_result()
-            self.remove_labels()
+            self.show_result()
+    
+    def show_result(self):
+        total = len(li)
+        grade = total-len(self.result)
+        res_txt = f'result:{grade}/{total}'
+        print(res_txt)
+        # TODO: 100점 만점 기준으로도 보여주기 => 완료!
+        print(100*grade//total)
+        self.save_result()
+        self.remove_labels()
+        label_result = tk.Label(window, text=res_txt, font=normal_font)
+        label_result.grid(row=5, column=0, columnspan=2)
+    
+    # TODO 창 닫기 버튼
     
     def save_result(self):
         import csv
