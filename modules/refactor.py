@@ -1,4 +1,6 @@
 def refactor_data(input_str: str):
+    if '급' in input_str:
+        return input_str
     PREFIX = '준'
     SUFFIX = '급'
     TARGET_SUBSTRING = 'ii'
