@@ -2,7 +2,7 @@ from gui_base import *
 from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
 from modules.refactor import refactor_data
 import random
-
+import time
 from modules.load import load_file__part
 li = load_file__part()
 
@@ -27,6 +27,7 @@ class ReadingTest:
         self.label_han.config(text=li[0][HANJA_IDX])
         self.entry.grid(row=4, columnspan=2)
         self.result = []
+        self.start_time = time.time()
     
     def show_text(self, event):
         response = self.entry.get()
@@ -61,19 +62,30 @@ class ReadingTest:
             self.show_result()
     
     def show_result(self):
+        # 결과 저장
+        self.save_result()
+
+        # 라벨 지우기
+        self.remove_labels()
+
+        # 점수 계산
         total = len(li)
         grade = total-len(self.result)
-        res_txt = f'result:{grade}/{total}'
-        print(res_txt)
-        # TODO: 100점 만점 기준으로도 보여주기 => 완료!
+        res_txt = f'{grade} / {total}개'
         percent = 100*grade//total
-        print(percent)
-        self.save_result()
-        self.remove_labels()
+        percent_str = f'{percent} / 100점'
+
+        # 라벨 설정 (맞은 개수, 백분율, 걸린 시간, 맺음말)
         label_result = tk.Label(window, text=res_txt, font=normal_font)
         label_result.grid(row=5, column=0, columnspan=2)
-        label_grade = tk.Label(window, text=percent, font=normal_font)
+        label_grade = tk.Label(window, text=percent_str, font=normal_font)
         label_grade.grid(row=6, column=0, columnspan=2)
+        elasped = time.time() - self.start_time
+        elasped_time = f'{elasped:.2f}초'
+        label_elasped_time = tk.Label(window, text=elasped_time, font=normal_font)
+        label_elasped_time.grid(row=7, column=0, columnspan=2)
+        label_closing = tk.Label(window, text=closing_remark, font=normal_font)
+        label_closing.grid(row=4, column=0, columnspan=2)
     
     # TODO 창 닫기 버튼
     
