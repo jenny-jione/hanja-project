@@ -66,11 +66,14 @@ class ReadingTest:
         res_txt = f'result:{grade}/{total}'
         print(res_txt)
         # TODO: 100점 만점 기준으로도 보여주기 => 완료!
-        print(100*grade//total)
+        percent = 100*grade//total
+        print(percent)
         self.save_result()
         self.remove_labels()
         label_result = tk.Label(window, text=res_txt, font=normal_font)
         label_result.grid(row=5, column=0, columnspan=2)
+        label_grade = tk.Label(window, text=percent, font=normal_font)
+        label_grade.grid(row=6, column=0, columnspan=2)
     
     # TODO 창 닫기 버튼
     
