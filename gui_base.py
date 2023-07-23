@@ -19,14 +19,14 @@ def setting(type: str):
         window_title = 'tk'
         closing_remark = 'End'
     elif type == 'mac':
-        width = 500
-        height = 300
+        width = 900
+        height = 600
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         pos_x = (screen_width - width) // 2
         pos_y = (screen_height - height) // 2
-        large_font_size = 100
-        normal_font_size = 20
+        large_font_size = 240
+        normal_font_size = 40
         window_title = 'Tkinter: 한자 3급 합격 기원🍀'
         closing_remark = '끝! 수고하셨습니다!!'
     else:
