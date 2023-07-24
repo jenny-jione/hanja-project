@@ -26,5 +26,5 @@ def create_sub_file(li: list, idx: int):
 
 if __name__ == '__main__':
     li = load_file(FILE_PATH)
-    # random.shuffle(li)
+    random.shuffle(li)
     split_list(li, 100)
