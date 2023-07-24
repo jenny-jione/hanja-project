@@ -39,7 +39,7 @@ def setting(type: str):
         large_font_size = 20
         normal_font_size = 5
 
-setting('mac')
+setting('linux')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
@@ -50,5 +50,5 @@ window.title(window_title)
 # 이것들도 다 이 base 파일에 넣을 수 있게 하기!!
 
 # TODO: 자동으로 100개씩 나눠서 파일 저장해주는 프로그램 만들기.
-#  이제 점점 배운 한자가 늘어나니까
-#  지금까지 배운 한자들 모의고사처럼 볼 수 있도록!
+
+# TODO: ii, __ refactor
