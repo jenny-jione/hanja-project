@@ -8,7 +8,7 @@ FILE_PATH = './data/data_review.csv'
 def split_list(li: list, chunk: int):
     print(len(li))
     num = len(li) // chunk
-    for i in range(num+1):
+    for i in range(num):
         start_idx = i*chunk
         end_idx = (i+1)*chunk
         print(f'{start_idx}:{end_idx}')
@@ -17,7 +17,7 @@ def split_list(li: list, chunk: int):
 
 
 def create_sub_file(li: list, idx: int):
-    with open(f'./data/data_review_split_{str(idx+1).zfill(2)}.csv', 'w') as f:
+    with open(f'./data/review/data_review_split_{str(idx+1).zfill(2)}.csv', 'w') as f:
         wr = csv.writer(f)
         wr.writerow(HEADER_ROW)
         for row in li:
@@ -26,5 +26,5 @@ def create_sub_file(li: list, idx: int):
 
 if __name__ == '__main__':
     li = load_file(FILE_PATH)
-    random.shuffle(li)
+    # random.shuffle(li)
     split_list(li, 100)
