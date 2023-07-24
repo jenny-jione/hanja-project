@@ -75,17 +75,17 @@ class ReadingTest:
         percent = 100*grade//total
         percent_str = f'{percent} / 100점'
 
-        # 라벨 설정 (맞은 개수, 백분율, 걸린 시간, 맺음말)
+        # 라벨 설정 (end, 맞은 개수, 백분율, 걸린 시간)
+        label_closing = tk.Label(window, text=closing_remark, font=normal_font)
+        label_closing.grid(row=2, column=0, columnspan=2)
         label_result = tk.Label(window, text=res_txt, font=normal_font)
-        label_result.grid(row=5, column=0, columnspan=2)
+        label_result.grid(row=3, column=0, columnspan=2)
         label_grade = tk.Label(window, text=percent_str, font=normal_font)
-        label_grade.grid(row=6, column=0, columnspan=2)
+        label_grade.grid(row=4, column=0, columnspan=2)
         elasped = time.time() - self.start_time
         elasped_time = f'{elasped:.2f}초'
         label_elasped_time = tk.Label(window, text=elasped_time, font=normal_font)
-        label_elasped_time.grid(row=7, column=0, columnspan=2)
-        label_closing = tk.Label(window, text=closing_remark, font=normal_font)
-        label_closing.grid(row=4, column=0, columnspan=2)
+        label_elasped_time.grid(row=5, column=0, columnspan=2)
     
     # TODO 창 닫기 버튼
     
