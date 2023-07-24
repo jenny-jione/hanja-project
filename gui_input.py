@@ -9,11 +9,12 @@ li = load_file__part()
 class ReadingTest:
     def __init__(self):
         self.cur_idx = 0
+        self.ans = 1
         self.label_han = tk.Label(window, text=" ", anchor="w", font=large_font)
         self.label_kor = tk.Label(window, text=" ", font=normal_font)
         self.label_lev = tk.Label(window, text=" ", font=normal_font)
-        self.label_cnt = tk.Label(window, text=" ", font=normal_font)
-        self.label_new = tk.Label(window, text=" ", font=normal_font)
+        self.label_index = tk.Label(window, text=" ", font=normal_font)
+        self.label_total = tk.Label(window, text=" ", font=normal_font)
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
         random.shuffle(li)
@@ -22,32 +23,51 @@ class ReadingTest:
         self.label_han.grid(row=0, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
         self.label_kor.grid(row=1, column=0, columnspan=2)
         self.label_lev.grid(row=2, column=0, columnspan=2)
-        self.label_cnt.grid(row=3, column=0, sticky="e")  # Use sticky="e" for right-align
-        self.label_new.grid(row=3, column=1, sticky="w")  # Use sticky="w" for left-align
-        self.label_han.config(text=li[0][HANJA_IDX])
+        self.label_index.grid(row=3, column=0, sticky="e")  # Use sticky="e" for right-align
+        self.label_total.grid(row=3, column=1, sticky="w")  # Use sticky="w" for left-align
         self.entry.grid(row=4, columnspan=2)
+        
+        self.label_han.config(text=li[0][HANJA_IDX])
+        self.label_index.config(text=self.cur_idx+1)
+        self.label_total.config(text='/ ' + str(len(li)))
+        
+        self.label_noti = tk.Label(window, text='', font=normal_font)
+        self.label_noti.grid(row=5, columnspan=2)
+        
         self.result = []
         self.start_time = time.time()
     
     def show_text(self, event):
+        self.ans += 1
+        # 입력값 변수에 저장
         response = self.entry.get()
         han, kor, lev = self.get_data()
-        f_str = f'[{str(self.cur_idx+1)}/{len(li)}] '
-        # TODO: 갚을/알릴 보 같은 경우에는 하나만 써도 맞게 하기!
-        # TODO: 회복할 복|다시 부 같은 경우에는 둘 다 써야 맞게 하기. 근데 순서는 달라도 됨
-        if kor == response:
-            f_str = f_str + 'right!'
+        
+        if self.ans == 2:
+            # 정답 노출
+            self.label_kor.config(text=kor)
+            self.label_lev.config(text=lev)
+            self.ans = 0
+            
+            # 채점
+            if kor == response:
+                f_str ='right!'
+            else:
+                f_str =f'wrong :: {kor}'
+                dic = {
+                    'han': han,
+                    'kor': kor,
+                    'lev': lev
+                }
+                self.result.append(dic)
+            self.label_noti.config(text=f_str)
         else:
-            f_str = f_str + f'wrong:: {han} {kor}'
-            dic = {
-                'han': han,
-                'kor': kor,
-                'lev': lev
-            }
-            self.result.append(dic)
-        print(f_str)
-        self.entry.delete(0, tk.END)
-        self.update_labels()
+            self.entry.delete(0, tk.END)
+            
+            self.update_labels()
+            self.label_kor.config(text='')
+            self.label_lev.config(text='')
+            self.label_noti.config(text='')
 
     def update_labels(self):
         self.cur_idx += 1
@@ -56,24 +76,23 @@ class ReadingTest:
         if self.cur_idx < len(li):
             han, _, _ = self.get_data()
             self.label_han.config(text=han)
+            self.label_index.config(text=self.cur_idx+1)
         else:
-            for res in self.result:
-                print(res)
             self.show_result()
     
     def show_result(self):
         # 결과 저장
         self.save_result()
-
-        # 라벨 지우기
-        self.remove_labels()
-
+        
+        # 라벨, 엔트리 지우기
+        self.remove_elements()
+        
         # 점수 계산
         total = len(li)
         grade = total-len(self.result)
-        res_txt = f'{grade} / {total}개'
+        res_txt = f'{grade}개 / {total}개'
         percent = 100*grade//total
-        percent_str = f'{percent} / 100점'
+        percent_str = f'{percent}%'
 
         # 라벨 설정 (end, 맞은 개수, 백분율, 걸린 시간)
         label_closing = tk.Label(window, text=closing_remark, font=normal_font)
@@ -101,10 +120,12 @@ class ReadingTest:
                 row = [lev, han, '', '', kor]
                 wr.writerow(row)
     
-    def remove_labels(self):
+    def remove_elements(self):
         self.label_han.grid_remove()
         self.entry.grid_forget()
-        # TODO: end 보여주기 (closing_remark)
+        self.entry.unbind('<Return>')
+        self.label_index.grid_remove()
+        self.label_total.grid_remove()
     
     def get_data(self):
         kor = li[self.cur_idx][HMS_IDX]
