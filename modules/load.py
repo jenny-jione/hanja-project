@@ -1,6 +1,6 @@
 import csv
 
-def load_file():
+def load_file_today():
     with open('./data/data_today.csv', 'r') as f:
     # with open('./data/data_sound.csv', 'r') as f:
         rdr = csv.reader(f)
@@ -42,6 +42,16 @@ def load_file__part():
             tuple_list.append(tuple(row))
     return tuple_list
 
+
+def load_file(filename: str):
+    with open(filename, 'r') as f:
+        rdr = csv.reader(f)
+        next(rdr)
+        
+        tuple_list = []
+        for row in rdr:
+            tuple_list.append(tuple(row))
+    return tuple_list
 
 """
 TODO

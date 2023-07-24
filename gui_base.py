@@ -1,9 +1,9 @@
 import tkinter as tk
-from modules.load import load_file
+from modules.load import load_file_today
 from tkinter import font
 
 window = tk.Tk()
-li = load_file()
+li = load_file_today()
 
 def setting(type: str):
     global width, height, pos_x, pos_y, \
