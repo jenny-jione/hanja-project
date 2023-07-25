@@ -8,16 +8,18 @@ li = load_file_today()
 def setting(type: str):
     global width, height, pos_x, pos_y, \
         large_font_size, normal_font_size, \
-        window_title, closing_remark
+        window_title, closing_remark, \
+        transparent
     if type == 'linux':
         width = 100
-        height = 140
+        height = 150
         pos_x = 1900
         pos_y = 1000
-        large_font_size = 15
+        large_font_size = 18
         normal_font_size = 8
         window_title = 'tk'
         closing_remark = 'End'
+        transparent = 0.3
     elif type == 'mac':
         width = 900
         height = 600
@@ -29,6 +31,7 @@ def setting(type: str):
         normal_font_size = 40
         window_title = 'Tkinter: 한자 3급 합격 기원🍀'
         closing_remark = '끝! 수고하셨습니다!!'
+        transparent = 1
     else:
         width = 500
         height = 200
@@ -45,6 +48,9 @@ normal_font = font.Font(size=normal_font_size)
 window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 # window.resizable(False, False)
 window.title(window_title)
+
+window.wait_visibility(window)
+window.wm_attributes("-alpha", transparent)
 
 # TODO: gui_study.py, gui_test_*.py에서 공통으로 사용하는 부분이 너무 많은데
 # 이것들도 다 이 base 파일에 넣을 수 있게 하기!!
