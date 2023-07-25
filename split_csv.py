@@ -6,8 +6,10 @@ from modules.shuffle import HEADER_ROW
 FILE_PATH = './data/data_review.csv'
 
 def split_list(li: list, chunk: int):
-    print(len(li))
-    num = len(li) // chunk
+    total_count = len(li)
+    num = total_count // chunk
+    if total_count % chunk != 0:
+        num += 1
     for i in range(num):
         start_idx = i*chunk
         end_idx = (i+1)*chunk
