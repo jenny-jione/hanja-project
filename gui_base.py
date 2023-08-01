@@ -19,7 +19,7 @@ def setting(type: str):
         normal_font_size = 8
         window_title = 'tk'
         closing_remark = 'End'
-        transparent = 0.3
+        transparent = 0.6
     elif type == 'mac':
         width = 900
         height = 600
