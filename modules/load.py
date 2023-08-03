@@ -53,6 +53,19 @@ def load_file(filename: str):
             tuple_list.append(tuple(row))
     return tuple_list
 
+
+def load_split_file(split_num: int):
+    filename_base = './data/review/data_review_split_'
+    with open(f'{filename_base}{str(split_num).zfill(2)}.csv', 'r') as f:
+        rdr = csv.reader(f)
+        next(rdr)
+        
+        tuple_list = []
+        for row in rdr:
+            tuple_list.append(tuple(row))
+    return tuple_list
+        
+
 """
 TODO
 1. gui에서 범위 선택할 수 있게 하기
