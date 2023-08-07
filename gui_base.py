@@ -5,7 +5,7 @@ from tkinter import font
 
 window = tk.Tk()
 # li = load_file_today()
-li = load_split_file(split_num=1)
+li = load_split_file(split_num=3)
 
 def window_geometry():
     window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
@@ -18,14 +18,14 @@ def setting(type: str):
     if type == 'linux':
         width = 100
         height = 150
-        pos_x = 1850
+        pos_x = 1900
         pos_y = 1000
         large_font_size = 18
         normal_font_size = 8
         window_title = 'tk'
         closing_remark = 'End'
         window_geometry()
-        transparent = 0.6
+        transparent = 0.3
         window.wait_visibility(window)
         window.wm_attributes("-alpha", transparent)
     else:
