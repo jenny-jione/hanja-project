@@ -7,6 +7,9 @@ window = tk.Tk()
 # li = load_file_today()
 li = load_split_file(split_num=1)
 
+def window_geometry():
+    window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
+
 def setting(type: str):
     global width, height, pos_x, pos_y, \
         large_font_size, normal_font_size, \
@@ -15,16 +18,17 @@ def setting(type: str):
     if type == 'linux':
         width = 100
         height = 150
-        pos_x = 1900
+        pos_x = 1850
         pos_y = 1000
         large_font_size = 18
         normal_font_size = 8
         window_title = 'tk'
         closing_remark = 'End'
+        window_geometry()
         transparent = 0.6
         window.wait_visibility(window)
         window.wm_attributes("-alpha", transparent)
-    elif 'mac' in type:
+    else:
         if type == 'mac':
             width = 900
             height = 600
@@ -41,13 +45,12 @@ def setting(type: str):
         pos_y = (screen_height - height) // 2
         window_title = 'Tkinter: 한자 3급 합격 기원🍀'
         closing_remark = '끝! 수고하셨습니다!!'
-        transparent = 1
-
-setting('macj')
+        window_geometry()
+    
+setting('linux')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
-window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
-# window.resizable(False, False)
+# window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 window.title(window_title)
 
 
