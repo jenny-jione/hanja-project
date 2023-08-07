@@ -4,7 +4,7 @@ from modules.refactor import refactor_data
 import random
 import time
 from modules.load import load_file__part
-li = load_file__part()
+# li = load_file__part()
 
 class ReadingTest:
     def __init__(self):
@@ -110,7 +110,8 @@ class ReadingTest:
     
     def save_result(self):
         import csv
-        with open('./data/data_today_wrong.csv', 'w') as f:
+        # with open('./data/data_today_wrong.csv', 'w') as f:
+        with open('./data/wrong_collection.csv', 'a') as f:
             wr = csv.writer(f)
             wr.writerow(['level', 'hanja', 'mean', 'pron', 'hms'])
             for res in self.result:
