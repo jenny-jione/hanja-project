@@ -50,8 +50,9 @@ class ReadingTest:
             self.ans = 0
             
             # 채점
-            if kor == response:
-                f_str ='right!'
+            check_result = self.check_response(answer=kor, user_response=response)
+            if check_result:
+                f_str =f'right! :: {kor}'
             else:
                 f_str =f'wrong :: {kor}'
                 dic = {
@@ -68,6 +69,66 @@ class ReadingTest:
             self.label_kor.config(text='')
             self.label_lev.config(text='')
             self.label_noti.config(text='')
+
+    # 입력값 판단
+    # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
+    def check_response(self, answer, user_response):
+        # Empty value
+        if not user_response:
+            return False
+        
+        # 100% 일치
+        if user_response == answer:
+            return True
+        response_splited = user_response.split('|')
+        answer_splited = answer.split('|')
+        
+        # | split 후 개수가 다를 경우 바로 False 반환
+        if len(answer_splited) != len(response_splited):
+            return False
+        
+        # 정렬 후 일치
+        if sorted(response_splited) == sorted(answer_splited):
+            return True
+        
+        check = False
+        for ans, resp in zip(answer_splited, response_splited):
+            check = self.check_one(ans=ans, res=resp)
+            if not check:
+                return False
+        return True
+
+    def check_one(self, ans, res):
+        # 완전 일치
+        if ans == res:
+            return True
+        
+        # mean, pron split
+        ans_h, ans_m = ans.split()
+        res_h, res_m = res.split()
+
+        # pron이 틀렸을 때 바로 False 반환
+        if ans_m != res_m:
+            return False
+        
+        # 순서 상관 없이 리스트 비교를 위해 / split 후 정렬
+        ans_h_sorted = sorted(ans_h.split('/'))
+        resp_h_sorted = sorted(res_h.split('/'))
+        
+        # ans: a/b c
+        # res: b/a c
+        if (ans_h_sorted == resp_h_sorted) and (ans_m == res_m):
+            return True
+        
+        # ans: a/b c
+        # res: (a c) or (b c)
+        if len(resp_h_sorted) == 1:
+            if (res_h in ans) and (res_m == ans_m):
+                return True
+            else:
+                return False
+
+        return False
 
     def update_labels(self):
         self.cur_idx += 1
@@ -110,8 +171,8 @@ class ReadingTest:
     
     def save_result(self):
         import csv
-        # with open('./data/data_today_wrong.csv', 'w') as f:
-        with open('./data/wrong_collection.csv', 'a') as f:
+        with open('./data/data_today_wrong.csv', 'w') as f:
+        # with open('./data/wrong_collection.csv', 'a') as f:
             wr = csv.writer(f)
             wr.writerow(['level', 'hanja', 'mean', 'pron', 'hms'])
             for res in self.result:
