@@ -103,6 +103,12 @@ class ReadingTest:
         if ans == res:
             return True
         
+        res_split = res.split()
+        # mean+' '+pron 형식이 아닐 경우 바로 False 반환
+        if (' ' not in res) or (len(res_split)!=2):
+            # print(f'not valid input :: {res}, {res_split}')
+            return False
+
         # mean, pron split
         ans_h, ans_m = ans.split()
         res_h, res_m = res.split()
