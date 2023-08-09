@@ -80,19 +80,19 @@ class ReadingTest:
         # 100% 일치
         if user_response == answer:
             return True
-        response_splited = user_response.split('|')
+        user_response_splited = user_response.split('|')
         answer_splited = answer.split('|')
         
         # | split 후 개수가 다를 경우 바로 False 반환
-        if len(answer_splited) != len(response_splited):
+        if len(answer_splited) != len(user_response_splited):
             return False
         
         # 정렬 후 일치
-        if sorted(response_splited) == sorted(answer_splited):
+        if sorted(user_response_splited) == sorted(answer_splited):
             return True
         
         check = False
-        for ans, resp in zip(answer_splited, response_splited):
+        for ans, resp in zip(answer_splited, user_response_splited):
             check = self.check_one(ans=ans, res=resp)
             if not check:
                 return False
