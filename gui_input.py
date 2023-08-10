@@ -3,8 +3,8 @@ from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
 from modules.refactor import refactor_data
 import random
 import time
-from modules.load import load_file__part
-# li = load_file__part()
+from modules.load import load_today_file
+li = load_today_file()
 
 class ReadingTest:
     def __init__(self):

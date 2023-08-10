@@ -32,7 +32,7 @@ def load_file__new():
     return result
 
 
-def load_file__part():
+def load_today_file():
     with open('./data/data_today_wrong.csv', 'r') as f:
         rdr = csv.reader(f)
         next(rdr)
