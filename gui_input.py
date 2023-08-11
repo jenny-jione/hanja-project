@@ -168,10 +168,15 @@ class ReadingTest:
         label_result.grid(row=3, column=0, columnspan=2)
         label_grade = tk.Label(window, text=percent_str, font=normal_font)
         label_grade.grid(row=4, column=0, columnspan=2)
-        elasped = time.time() - self.start_time
-        elasped_time = f'{elasped:.2f}초'
-        label_elasped_time = tk.Label(window, text=elasped_time, font=normal_font)
-        label_elasped_time.grid(row=5, column=0, columnspan=2)
+        elasped = round(time.time() - self.start_time)
+        if elasped < 60:
+            time_converted = f'{elasped}초'
+        else:
+            minute = int(elasped//60)
+            sec = elasped - (minute*60)
+            time_converted = f'{minute}분 {sec}초'
+        label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
+        label_elasped_time.grid(row=5, column=0, columnspan=2, rowspan=2)
     
     # TODO 창 닫기 버튼
     
