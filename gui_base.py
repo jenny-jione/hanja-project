@@ -52,6 +52,9 @@ def setting(type: str):
             height = 400
             large_font_size = 120
             normal_font_size = 20
+            if 'search' in type:
+                large_font_size = 20
+                normal_font_size = 15
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         pos_x = (screen_width - width) // 2
@@ -60,7 +63,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('linuxsearch')
+setting('linux')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 # window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
