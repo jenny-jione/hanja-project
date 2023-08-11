@@ -28,6 +28,19 @@ def setting(type: str):
         transparent = 0.3
         window.wait_visibility(window)
         window.wm_attributes("-alpha", transparent)
+    elif type=='linuxsearch':
+        width = 150
+        height = 400
+        pos_x = 1900
+        pos_y = 950
+        large_font_size = 16
+        normal_font_size = 8
+        window_title = 'tk'
+        closing_remark = 'End'
+        window_geometry()
+        transparent = 0.3
+        window.wait_visibility(window)
+        window.wm_attributes("-alpha", transparent)     
     else:
         if type == 'mac':
             width = 900
@@ -47,7 +60,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('linux')
+setting('linuxsearch')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 # window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
