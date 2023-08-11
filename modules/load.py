@@ -1,8 +1,7 @@
 import csv
 
-def load_file_today():
-    with open('./data/data_today.csv', 'r') as f:
-    # with open('./data/data_sound.csv', 'r') as f:
+def load_all_file():
+    with open('./data/data.csv', 'r') as f:
         rdr = csv.reader(f)
         next(rdr)
         
@@ -10,26 +9,6 @@ def load_file_today():
         for row in rdr:
             tuple_list.append(tuple(row))
     return tuple_list
-
-def load_file__new():
-    with open('./data/data_today.csv', 'r') as f:
-        rdr = csv.reader(f)
-        
-        lines = list(rdr)
-        header = lines[0]
-        IDX_LEV = header.index('level')
-        IDX_HAN = header.index('hanja')
-        IDX_KOR = header.index('hms')
-        
-        result = []
-        for line in lines[1:]:
-            data = {
-                'level': line[IDX_LEV],
-                'hanja': line[IDX_HAN],
-                'kor': line[IDX_KOR]
-            }
-            result.append(data)
-    return result
 
 
 def load_today_file():
@@ -76,7 +55,3 @@ TODO
     목표: 비슷한 한자, 부수, 단어 예시 등.. 더 보여주기
     근데 이건 크롤링 더 해서 데이터를 쌓아야 할듯!!
 """
-
-if __name__ == '__main__':
-    li = load_file__new()
-    print(li)
