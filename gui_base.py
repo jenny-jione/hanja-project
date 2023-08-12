@@ -48,13 +48,16 @@ def setting(type: str):
             large_font_size = 240
             normal_font_size = 40
         else:
-            width = 500
-            height = 400
-            large_font_size = 120
-            normal_font_size = 20
             if 'search' in type:
-                large_font_size = 20
+                width = 400
+                height = 600
+                large_font_size = 30
                 normal_font_size = 15
+            else:
+                width = 500
+                height = 400
+                large_font_size = 120
+                normal_font_size = 20
         screen_width = window.winfo_screenwidth()
         screen_height = window.winfo_screenheight()
         pos_x = (screen_width - width) // 2
@@ -63,7 +66,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('linux')
+setting('macjenny')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 # window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
