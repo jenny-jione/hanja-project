@@ -1,0 +1,58 @@
+# 부수가 있는 데이터 다루기
+import csv
+
+# 훈 음 주어지면 정렬을 위한 대표 음 반환
+def get_sort_key(kor: str):
+    return kor[-1]
+
+def convert_level(input_str: str):
+    input_str = input_str.strip('급')
+    if '준' in input_str:
+        input_str = input_str.strip('준') + 'ii'
+    else:
+        input_str += '__'
+    return input_str
+
+with open('./data/boosoo.csv', 'r') as f:
+    rdr = csv.reader(f)
+    next(rdr)
+    
+    HEADER_ROW = ['hanja','kor','radical','total_num_of_strokes','level']
+    HANJA_IDX = HEADER_ROW.index('hanja')
+    KOR_IDX = HEADER_ROW.index('kor')
+    RADICAL_IDX = HEADER_ROW.index('radical')
+    NUM_OF_STROKES_IDX = HEADER_ROW.index('total_num_of_strokes')
+    LEVEL_IDX = HEADER_ROW.index('level')
+
+    rows = list(rdr)
+    with open('./data/data_with_radical.csv', 'w') as f2:
+        wr = csv.writer(f2)
+        wr.writerow(['hanja', 'kor', 'radical', 
+                     'total_num_of_strokes', 
+                     'level', 
+                     'level_sort', 'sort_key'
+                     ])
+        result = []
+        for row in rows:
+            hanja = row[HANJA_IDX]
+            kor = row[KOR_IDX]
+            radical = row[RADICAL_IDX]
+            strokes = row[NUM_OF_STROKES_IDX]
+            level = row[LEVEL_IDX]
+            level_sort = convert_level(level)
+
+            kors_splited = kor.split(',')
+            kors = [k.strip() for k in kors_splited]
+            sort_key = get_sort_key(kors[0])
+            new_kor = '|'.join(kors)
+            hanja_info = [
+                hanja, new_kor, radical,
+                strokes,
+                level,
+                level_sort, sort_key
+            ]
+            result.append(hanja_info)
+
+        sorted_result = sorted(result, key = lambda x: (x[-1], x[3]))
+        for data in sorted_result:
+            wr.writerow(data)
