@@ -1,3 +1,9 @@
+"""
+crawling으로 부수 이름(훈음) 가져온 후 radicals.csv에 저장하는 코드
+radicals.csv에 저장되는 컬럼: 5
+hanja, kor, radical, total_num_of_strokes, level
+"""
+
 import csv
 from crawling_with_boosoo import get_hanja_info
 import os
@@ -22,9 +28,7 @@ with open('./data/data_with_radical.csv', 'r') as f:
 
 with open('./data/radicals.csv', 'a') as f2:
     wr = csv.writer(f2)
-    wr.writerow(['hanja', 'kor', 'radical', 
-                         'total_num_of_strokes', 
-                         'level'])
+    wr.writerow(['hanja', 'kor', 'radical', 'total_num_of_strokes', 'level'])
         
     urls = [(BASE_BASE_URL+'/w/'+rad) for rad in radicals]
     hanja_infos = []

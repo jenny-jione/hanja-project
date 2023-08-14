@@ -1,10 +1,8 @@
 import tkinter as tk
-# from modules.load import load_file_today
 from modules.load import load_split_file
 from tkinter import font
 
 window = tk.Tk()
-# li = load_file_today()
 li = load_split_file(split_num=3)
 
 def window_geometry():

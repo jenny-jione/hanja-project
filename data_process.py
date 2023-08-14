@@ -1,4 +1,10 @@
-# 부수가 있는 데이터 다루기
+"""
+boosoo.csv 정렬 -> data_with_radical.csv 생성
+boosoo.csv에서 대표 음(rep_pron) 가져오기
+정렬
+ - 1) rep_pron 기준 오름차순 (가나다순)
+ - 2) 획순 기준 오름차순
+"""
 import csv
 
 # 훈 음 주어지면 정렬을 위한 대표 음(representative pronunciation) 반환
