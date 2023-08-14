@@ -1,5 +1,5 @@
 from gui_base import *
-from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
+from modules.index import HANJA_IDX, HMS_IDX, LEVEL_IDX
 from modules.load import load_all_file
 from modules.refactor import refactor_data
 li = load_all_file()

@@ -31,7 +31,7 @@ class MainPage(tk.Frame):
                   command=lambda: master.switch_frame(WritingTest)).pack(side="left", padx=10)
 
 from modules.load import load_file_today
-from modules.shuffle import HANJA_IDX, HMS_IDX, LEVEL_IDX
+from modules.index import HANJA_IDX, HMS_IDX, LEVEL_IDX
 
 class ReadingTest(tk.Frame):
     def __init__(self, master):

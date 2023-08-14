@@ -1,7 +1,7 @@
 import csv
 import random
 from modules.load import load_file
-from modules.shuffle import HEADER_ROW
+from modules.index import HEADER_ROW
 
 FILE_PATH = './data/data_review.csv'
 
