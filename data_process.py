@@ -1,8 +1,8 @@
 # 부수가 있는 데이터 다루기
 import csv
 
-# 훈 음 주어지면 정렬을 위한 대표 음 반환
-def get_sort_key(kor: str):
+# 훈 음 주어지면 정렬을 위한 대표 음(representative pronunciation) 반환
+def get_representative_pronunciation(kor: str):
     return kor[-1]
 
 def convert_level(input_str: str):
@@ -30,7 +30,7 @@ with open('./data/boosoo.csv', 'r') as f:
         wr.writerow(['hanja', 'kor', 'radical', 
                      'total_num_of_strokes', 
                      'level', 
-                     'level_sort', 'sort_key'
+                     'level_sort', 'rep_pron'
                      ])
         result = []
         for row in rows:
@@ -43,13 +43,13 @@ with open('./data/boosoo.csv', 'r') as f:
 
             kors_splited = kor.split(',')
             kors = [k.strip() for k in kors_splited]
-            sort_key = get_sort_key(kors[0])
+            rep_pron = get_representative_pronunciation(kors[0])
             new_kor = '|'.join(kors)
             hanja_info = [
                 hanja, new_kor, radical,
                 strokes,
                 level,
-                level_sort, sort_key
+                level_sort, rep_pron
             ]
             result.append(hanja_info)
 
