@@ -11,6 +11,14 @@ from modules.load import load_today_file
 li = load_today_file()
 li = li[-10:]
 
+ROW_HANJA = 0
+ROW_KOR = 1
+ROW_NOTI = ROW_CLOSING = 2
+ROW_LEVEL = ROW_RESULT = 3
+ROW_RADICAL = ROW_GRADE = 4
+ROW_ENTRY = ROW_TIME = 5
+ROW_PROGRESS = 6
+
 class ReadingTest:
     def __init__(self):
         self.cur_idx = 0
@@ -27,14 +35,14 @@ class ReadingTest:
         # random.shuffle(li)
         self.entry = tk.Entry(window)
         self.entry.bind('<Return>', self.show_text)
-        self.label_han.grid(row=0, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
-        self.label_kor.grid(row=1, column=0, columnspan=2)
-        self.label_noti.grid(row=2, columnspan=2)
-        self.label_lev.grid(row=3, column=0, columnspan=2)
-        self.label_radical.grid(row=4, column=0, columnspan=2)
-        self.entry.grid(row=5, columnspan=2)
-        self.label_index.grid(row=6, column=0, sticky="e")  # Use sticky="e" for right-align
-        self.label_total.grid(row=6, column=1, sticky="w")  # Use sticky="w" for left-align
+        self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
+        self.label_kor.grid(row=ROW_KOR, column=0, columnspan=2)
+        self.label_noti.grid(row=ROW_NOTI, columnspan=2)
+        self.label_lev.grid(row=ROW_LEVEL, column=0, columnspan=2)
+        self.label_radical.grid(row=ROW_RADICAL, column=0, columnspan=2)
+        self.entry.grid(row=ROW_ENTRY, columnspan=2)
+        self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
+        self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
         
         self.label_han.config(text=li[0][HANJA_IDX__V2])
         self.label_index.config(text=self.cur_idx+1)
@@ -149,7 +157,7 @@ class ReadingTest:
     def update_labels(self):
         self.cur_idx += 1
         if self.cur_idx > 0:
-            self.entry.grid(row=5, columnspan=2)
+            self.entry.grid(row=ROW_ENTRY, columnspan=2)
         if self.cur_idx < len(li):
             han, _, _, _, _, _, _ = self.get_data()
             self.label_han.config(text=han)
@@ -173,11 +181,11 @@ class ReadingTest:
 
         # 라벨 설정 (end, 맞은 개수, 백분율, 걸린 시간)
         label_closing = tk.Label(window, text=closing_remark, font=normal_font)
-        label_closing.grid(row=2, column=0, columnspan=2)
+        label_closing.grid(row=ROW_CLOSING, column=0, columnspan=2)
         label_result = tk.Label(window, text=res_txt, font=normal_font)
-        label_result.grid(row=3, column=0, columnspan=2)
+        label_result.grid(row=ROW_RESULT, column=0, columnspan=2)
         label_grade = tk.Label(window, text=percent_str, font=normal_font)
-        label_grade.grid(row=4, column=0, columnspan=2)
+        label_grade.grid(row=ROW_GRADE, column=0, columnspan=2)
         elasped = round(time.time() - self.start_time)
         if elasped < 60:
             time_converted = f'{elasped}초'
@@ -186,7 +194,7 @@ class ReadingTest:
             sec = elasped - (minute*60)
             time_converted = f'{minute}분 {sec}초'
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
-        label_elasped_time.grid(row=5, column=0, columnspan=2, rowspan=2)
+        label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
     
     # TODO 창 닫기 버튼
     

@@ -1,0 +1,95 @@
+from ver2__gui_base import *
+from modules.index import HANJA_IDX__V2, KOR_IDX__V2, LEVEL_IDX__V2, RADICAL_IDX__V2, RADICAL_NAME_IDX__V2
+from modules.load import load_all_file
+from modules.load import load_all_file_with_radical
+# li = load_all_file()
+li = load_all_file_with_radical()
+
+MAX_LENGTH = 10
+
+COL_HAN = 0
+COL_KOR = 1
+COL_LEV = 2
+COL_RADICAL = 3
+COL_RADICAL_NAME = 4
+
+class Search:
+    def __init__(self):
+        self.cur_idx = 0
+        self.ans = 1
+        window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
+        window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
+        window.grid_columnconfigure(2, weight=1)  # Column 2 will also expand for label_new
+        window.grid_columnconfigure(3, weight=1)  # Column 2 will also expand for label_new
+        window.grid_columnconfigure(4, weight=1)  # Column 2 will also expand for label_new
+        self.entry = tk.Entry(window)
+        self.entry.bind('<Return>', self.search_input)
+        
+        self.result_labels = []
+        self.han_labels = []
+        self.kor_labels = []
+        self.lev_labels = []
+        self.radical_labels = []
+        self.radical_name_labels = []
+        for i in range(MAX_LENGTH):
+            label_han = tk.Label(window, font=large_font)
+            label_han.grid(row=i, column=COL_HAN)
+            label_kor = tk.Label(window, font=normal_font)
+            label_kor.grid(row=i, column=COL_KOR)
+            label_lev = tk.Label(window, font=normal_font)
+            label_lev.grid(row=i, column=COL_LEV)
+            label_radical = tk.Label(window, font=small_font)
+            label_radical.grid(row=i, column=COL_RADICAL)
+            label_radical_name = tk.Label(window, font=small_font)
+            label_radical_name.grid(row=i, column=COL_LEV)
+            self.han_labels.append(label_han)
+            self.kor_labels.append(label_kor)
+            self.lev_labels.append(label_lev)
+            self.radical_labels.append(label_radical)
+            self.radical_name_labels.append(label_radical_name)
+        self.entry.grid(row=MAX_LENGTH, columnspan=5)
+        
+        # 검색을 위한 kor(hm) 리스트 생성
+        self.kor_list = [row[KOR_IDX__V2] for row in li]
+        
+        self.result = []
+    
+    def search_input(self, event):
+        self.delete_labels()
+        user_input = self.entry.get()
+        for idx, data in enumerate(self.kor_list):
+            if user_input in data:
+                tmp = (
+                    li[idx][HANJA_IDX__V2], 
+                    li[idx][KOR_IDX__V2], 
+                    li[idx][LEVEL_IDX__V2],
+                    li[idx][RADICAL_IDX__V2],
+                    li[idx][RADICAL_NAME_IDX__V2]
+                    )
+                self.result.append(tmp)
+        print(len(self.result))
+        
+        length = min(MAX_LENGTH, len(self.result))
+        for i in range(length):
+            self.han_labels[i].config(text=self.result[i][0])
+            self.kor_labels[i].config(text=self.result[i][1])
+            # TODO: level이 gui에서 표시 안됨! 이유 찾아서 해결하기!
+            self.lev_labels[i].config(text=self.result[i][2])
+            print(self.result[i][2])
+            self.radical_labels[i].config(text=self.result[i][3])
+            self.radical_name_labels[i].config(text=self.result[i][4])
+        # entry 입력데이터 지우기
+        self.entry.delete(0, tk.END)
+        self.result = []
+    
+    def delete_labels(self):
+        for i in range(MAX_LENGTH):
+            self.han_labels[i].config(text='')
+            self.kor_labels[i].config(text='')
+            self.lev_labels[i].config(text='')
+            self.radical_labels[i].config(text='')
+            self.radical_name_labels[i].config(text='')
+
+
+search = Search()
+window.mainloop()

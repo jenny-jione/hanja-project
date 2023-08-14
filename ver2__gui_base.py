@@ -31,10 +31,10 @@ def setting(type: str):
         window.wait_visibility(window)
         window.wm_attributes("-alpha", transparent)
     elif type=='linuxsearch':
-        width = 150
+        width = 200
         height = 400
         pos_x = 1900
-        pos_y = 950
+        pos_y = 800
         large_font_size = 16
         normal_font_size = 9
         small_font_size = 8
@@ -72,7 +72,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('linux')
+setting('linuxsearch')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 small_font = font.Font(size=small_font_size)
