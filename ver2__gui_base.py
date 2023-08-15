@@ -54,7 +54,7 @@ def setting(type: str):
         else:
             if 'search' in type:
                 width = 400
-                height = 600
+                height = 700
                 large_font_size = 30
                 normal_font_size = 15
                 small_font_size = 13
@@ -72,7 +72,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('linuxsearch')
+setting('macsearch')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 small_font = font.Font(size=small_font_size)
