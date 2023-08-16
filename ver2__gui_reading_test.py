@@ -32,7 +32,7 @@ class ReadingTest:
         self.label_kor.grid(row=ROW_KOR, column=0, columnspan=2)
         self.label_lev.grid(row=ROW_LEVEL, column=0, columnspan=2)
         self.label_radical.grid(row=ROW_RADICAL, column=0, columnspan=2)
-        self.button_next.grid(row=ROW_BUTTON, column=1, sticky="e")
+        self.button_next.grid(row=ROW_BUTTON, column=1, sticky="")
         self.label_progress.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
         self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
         random.shuffle(li)
@@ -74,6 +74,7 @@ class ReadingTest:
         elif self.click > len(li):
             self.label_han.config(text='')
             self.label_kor.config(text=closing_remark)
+            self.label_radical.config(text='')
             self.label_lev.config(text='')
             self.label_progress.config(text='')
             self.label_total.config(text='')
