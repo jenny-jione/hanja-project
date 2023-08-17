@@ -21,7 +21,7 @@ def setting(type: str):
         height = 180
         pos_x = 1900
         pos_y = 1000
-        large_font_size = 18
+        large_font_size = 20
         normal_font_size = 9
         small_font_size = 8
         window_title = 'tk'
