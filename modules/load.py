@@ -38,10 +38,10 @@ def load_file(filename: str):
         rdr = csv.reader(f)
         next(rdr)
         
-        tuple_list = []
+        result = []
         for row in rdr:
-            tuple_list.append(tuple(row))
-    return tuple_list
+            result.append(row)
+    return result
 
 
 def load_split_file(split_num: int):
