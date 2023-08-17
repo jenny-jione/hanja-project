@@ -31,20 +31,6 @@ def setting(type: str):
         transparent = 0.3
         window.wait_visibility(window)
         window.wm_attributes("-alpha", transparent)
-    elif type=='linuxsearch':
-        width = 200
-        height = 400
-        pos_x = 1900
-        pos_y = 800
-        large_font_size = 16
-        normal_font_size = 9
-        small_font_size = 8
-        window_title = 'tk'
-        closing_remark = 'End'
-        window_geometry()
-        transparent = 0.3
-        window.wait_visibility(window)
-        window.wm_attributes("-alpha", transparent)     
     else:
         if type == 'mac':
             width = 900

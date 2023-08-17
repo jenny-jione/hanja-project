@@ -1,17 +1,38 @@
-from gui_base import *
+import tkinter as tk
+from tkinter import font
 from modules.index import HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX
-from modules.load import load_all_file
 from modules.load import load_all_file_with_radical
-# li = load_all_file()
 li = load_all_file_with_radical()
 
-MAX_LENGTH = 15
+MAX_LENGTH = 7
 
 COL_HAN = 0
 COL_KOR = 1
 COL_LEV = 2
 COL_RADICAL = 3
 
+def window_geometry():
+    window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
+
+window = tk.Tk()
+width = 200
+height = 300
+pos_x = 1800
+pos_y = 800
+large_font_size = 16
+normal_font_size = 9
+small_font_size = 8
+window_title = 'tk'
+closing_remark = 'End'
+window_geometry()
+transparent = 0.3
+window.wait_visibility(window)
+window.wm_attributes("-alpha", transparent)   
+
+large_font = font.Font(size=large_font_size)
+normal_font = font.Font(size=normal_font_size)
+small_font = font.Font(size=small_font_size)
+window.title(window_title)
 
 class Search:
     def __init__(self):
