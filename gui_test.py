@@ -220,6 +220,7 @@ class ReadingTest:
             info = data[:] 
             hanja_dict[hanja] = info
         
+        new = 0
         for res in self.result:
             res_hanja = res[0]
             res_info = res
@@ -227,6 +228,7 @@ class ReadingTest:
                 mistake = int(hanja_dict[res_hanja][-1]) + 1
                 hanja_dict[res_hanja] = res_info + [mistake]
             else:
+                new += 1
                 hanja_dict[res_hanja] = res_info + ['1']
             
         with open(DATA_ACCUMULATED, 'w') as f:
@@ -235,6 +237,8 @@ class ReadingTest:
                         'stroke_count', 'level', 'rep_pron', 'mistake'])
             for k, v in hanja_dict.items():
                 wr.writerow(v)
+        
+        print(f'{new} datas were added.')
     
     def remove_elements(self):
         self.label_han.grid_remove()
