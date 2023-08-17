@@ -1,5 +1,6 @@
 """
-radicals.csv + data_with_radical.csv 합쳐서 새로 저장하기
+** 최종 파일 : data_radicals.csv **
+radicals.csv + data_with_radical_raw.csv 합쳐서 새로 저장하기
 hanja,kor,stroke_count,radical,level,level_sort,rep_pron
 """
 import csv
@@ -33,13 +34,13 @@ with open('./data/data.csv', 'r') as f:
 print(len(kor_dict))
 
     
-# data_with_radical.csv에서 한줄씩 읽으며
+# data_with_radical_raw.csv에서 한줄씩 읽으며
 # hanja, kor, radical, total_num_of_strokes, level, level_sort, sort_key
 #   radical_dict에서 radical_name 매칭하기
 #   kor_dict에서 kor 매칭하기
 # infos: info = hanja, kor, radical, radical_name, stroke_count, level, rep_pron
 infos = []
-with open('./data/data_with_radical.csv', 'r') as f2:
+with open('./data/data_with_radical_raw.csv', 'r') as f2:
     rdr2 = csv.reader(f2)
     next(rdr2)
     rows2 = list(rdr2)
@@ -52,6 +53,7 @@ with open('./data/data_with_radical.csv', 'r') as f2:
         stroke_count = int(row[3].strip('획'))
         level = row[4]
         rep_pron = row[-1]
+        print(level, radical_name)
         info = [hanja, kor, radical, radical_name, stroke_count, level, rep_pron]
         infos.append(info)
 
