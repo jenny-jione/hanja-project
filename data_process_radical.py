@@ -59,14 +59,14 @@ with open('./data/data_with_radical.csv', 'r') as f2:
 # 정렬
 # 1. rep_pron
 # 2. stroke_count
-from modules.index import HEADER_ROW__V2, REP_PRON_IDX__V2, STROKE_COUNT__V2
-infos.sort(key = lambda x: (x[REP_PRON_IDX__V2], x[STROKE_COUNT__V2]))
+from modules.index import HEADER_ROW, REP_PRON_IDX, STROKE_COUNT
+infos.sort(key = lambda x: (x[REP_PRON_IDX], x[STROKE_COUNT]))
 
 
 # 새로운 csv 파일 생성 (컬럼 8개)
 # hanja, kor, radical, radical_name, stroke_count, level, rep_pron
 with open('./data/data_radicals.csv', 'w') as f3:
     wr = csv.writer(f3)
-    wr.writerow(HEADER_ROW__V2)
+    wr.writerow(HEADER_ROW)
     for info in infos:
         wr.writerow(info)

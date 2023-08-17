@@ -1,5 +1,5 @@
 from ver2__gui_base import *
-from modules.index import HANJA_IDX__V2, KOR_IDX__V2, LEVEL_IDX__V2, RADICAL_IDX__V2, RADICAL_NAME_IDX__V2
+from modules.index import HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX
 from modules.load import load_all_file
 from modules.load import load_all_file_with_radical
 # li = load_all_file()
@@ -46,7 +46,7 @@ class Search:
         self.entry.grid(row=MAX_LENGTH, columnspan=5)
         
         # 검색을 위한 kor(hm) 리스트 생성
-        self.kor_list = [row[KOR_IDX__V2] for row in li]
+        self.kor_list = [row[KOR_IDX] for row in li]
         
         self.result = []
     
@@ -56,11 +56,11 @@ class Search:
         for idx, data in enumerate(self.kor_list):
             if user_input in data:
                 tmp = (
-                    li[idx][HANJA_IDX__V2], 
-                    li[idx][KOR_IDX__V2], 
-                    li[idx][LEVEL_IDX__V2],
-                    li[idx][RADICAL_IDX__V2],
-                    li[idx][RADICAL_NAME_IDX__V2]
+                    li[idx][HANJA_IDX], 
+                    li[idx][KOR_IDX], 
+                    li[idx][LEVEL_IDX],
+                    li[idx][RADICAL_IDX],
+                    li[idx][RADICAL_NAME_IDX]
                     )
                 self.result.append(tmp)
         print(len(self.result))

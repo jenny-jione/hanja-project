@@ -1,9 +1,5 @@
 from ver2__gui_base import *
-# from modules.index import HANJA_IDX__V2, KOR_IDX__V2, LEVEL_IDX__V2
-from modules.index import (
-    HANJA_IDX__V2, KOR_IDX__V2, LEVEL_IDX__V2, RADICAL_IDX__V2, RADICAL_NAME_IDX__V2,
-    STROKE_COUNT__V2, REP_PRON_IDX__V2
-    )
+from modules.index import HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX
 import random
 
 ROW_HANJA = 0
@@ -59,14 +55,14 @@ class ReadingTest:
                 self.label_radical.config(text='')
             else:
                 idx = self.click // 2 - 1
-                kor = li[idx][KOR_IDX__V2]
+                kor = li[idx][KOR_IDX]
                 self.label_kor.config(text=kor)
-                level = li[idx][LEVEL_IDX__V2]
+                level = li[idx][LEVEL_IDX]
                 self.label_lev.config(text=level)
-                radical = li[idx][RADICAL_IDX__V2]
-                radical_name = li[idx][RADICAL_NAME_IDX__V2]
+                radical = li[idx][RADICAL_IDX]
+                radical_name = li[idx][RADICAL_NAME_IDX]
                 self.label_radical.config(text=f'{radical}({radical_name})')
-            han = li[idx][HANJA_IDX__V2]
+            han = li[idx][HANJA_IDX]
             self.label_han.config(text=han)
             self.label_progress.config(text=idx+1)
             self.label_total.config(text='/ ' + str(len(li)))

@@ -72,7 +72,7 @@ def setting(type: str):
         closing_remark = '끝! 수고하셨습니다!!'
         window_geometry()
     
-setting('macsearch')
+setting('linux')
 large_font = font.Font(size=large_font_size)
 normal_font = font.Font(size=normal_font_size)
 small_font = font.Font(size=small_font_size)

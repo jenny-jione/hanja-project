@@ -2,8 +2,8 @@
 
 from ver2__gui_base import *
 from modules.index import (
-    HANJA_IDX__V2, KOR_IDX__V2, LEVEL_IDX__V2, RADICAL_IDX__V2, RADICAL_NAME_IDX__V2,
-    STROKE_COUNT__V2, REP_PRON_IDX__V2
+    HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX,
+    STROKE_COUNT, REP_PRON_IDX
     )
 import random
 import time
@@ -43,7 +43,7 @@ class ReadingTest:
         self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
         self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
         
-        self.label_han.config(text=li[0][HANJA_IDX__V2])
+        self.label_han.config(text=li[0][HANJA_IDX])
         self.label_index.config(text=self.cur_idx+1)
         self.label_total.config(text='/ ' + str(len(li)))
         
@@ -215,13 +215,13 @@ class ReadingTest:
         self.label_total.grid_remove()
     
     def get_data(self):
-        kor = li[self.cur_idx][KOR_IDX__V2]
-        han = li[self.cur_idx][HANJA_IDX__V2]
-        radical = li[self.cur_idx][RADICAL_IDX__V2]
-        radical_name = li[self.cur_idx][RADICAL_NAME_IDX__V2]
-        stroke_count = li[self.cur_idx][STROKE_COUNT__V2]
-        level = li[self.cur_idx][LEVEL_IDX__V2]
-        rep_pron = li[self.cur_idx][REP_PRON_IDX__V2]
+        kor = li[self.cur_idx][KOR_IDX]
+        han = li[self.cur_idx][HANJA_IDX]
+        radical = li[self.cur_idx][RADICAL_IDX]
+        radical_name = li[self.cur_idx][RADICAL_NAME_IDX]
+        stroke_count = li[self.cur_idx][STROKE_COUNT]
+        level = li[self.cur_idx][LEVEL_IDX]
+        rep_pron = li[self.cur_idx][REP_PRON_IDX]
         return han, kor, radical, radical_name, stroke_count, level, rep_pron
 
 
