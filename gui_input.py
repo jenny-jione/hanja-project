@@ -1,6 +1,6 @@
 # 부수 추가 version
 
-from ver2__gui_base import *
+from gui_base import *
 from modules.index import (
     HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX,
     STROKE_COUNT, REP_PRON_IDX

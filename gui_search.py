@@ -1,4 +1,4 @@
-from ver2__gui_base import *
+from gui_base import *
 from modules.index import HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NAME_IDX
 from modules.load import load_all_file
 from modules.load import load_all_file_with_radical
