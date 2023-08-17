@@ -32,7 +32,7 @@ class ReadingTest:
         self.label_total = tk.Label(window, text=" ", font=small_font)
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
-        # random.shuffle(li)
+        random.shuffle(li)
         self.entry = tk.Entry(window)
         self.entry.bind('<Return>', self.show_text)
         self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
