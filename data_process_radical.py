@@ -53,7 +53,6 @@ with open('./data/data_with_radical_raw.csv', 'r') as f2:
         stroke_count = int(row[3].strip('획'))
         level = row[4]
         rep_pron = row[-1]
-        print(level, radical_name)
         info = [hanja, kor, radical, radical_name, stroke_count, level, rep_pron]
         infos.append(info)
 
