@@ -1,5 +1,5 @@
 """
-boosoo.csv 정렬 -> data_with_radical.csv 생성
+boosoo.csv 정렬 -> data_with_radical_raw.csv 생성
 boosoo.csv에서 대표 음(rep_pron) 가져오기
 정렬
  - 1) rep_pron 기준 오름차순 (가나다순)
@@ -31,7 +31,7 @@ with open('./data/boosoo.csv', 'r') as f:
     LEVEL_IDX = HEADER_ROW.index('level')
 
     rows = list(rdr)
-    with open('./data/data_with_radical.csv', 'w') as f2:
+    with open('./data/data_with_radical_raw.csv', 'w') as f2:
         wr = csv.writer(f2)
         wr.writerow(['hanja', 'kor', 'radical', 
                      'total_num_of_strokes', 
@@ -42,7 +42,7 @@ with open('./data/boosoo.csv', 'r') as f:
         for row in rows:
             hanja = row[HANJA_IDX]
             kor = row[KOR_IDX]
-            radical = row[RADICAL_IDX]
+            radical = row[RADICAL_IDX][0]
             strokes = row[NUM_OF_STROKES_IDX]
             level = row[LEVEL_IDX]
             level_sort = convert_level(level)

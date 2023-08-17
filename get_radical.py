@@ -14,7 +14,7 @@ BASE_BASE_URL = os.getenv('BASE_BASE_URL')
 
 
 radical_dict = {}
-with open('./data/data_with_radical.csv', 'r') as f:
+with open('./data/data_with_radical_raw.csv', 'r') as f:
     rdr = csv.reader(f)
     next(rdr)
     for rd in rdr:
