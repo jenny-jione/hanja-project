@@ -1,4 +1,4 @@
-hanja,kor,radical,total_num_of_strokes,level,level_sort,sort_key
+hanja,kor,radical,total_num_of_strokes,level,level_sort,rep_pron
 家,집 가,宀,10획,준7급,7ii,가
 假,거짓 가,人,11획,준4급,4ii,가
 街,거리 가,行,12획,준4급,4ii,가
@@ -282,6 +282,7 @@ hanja,kor,radical,total_num_of_strokes,level,level_sort,sort_key
 吉,길할 길,口,6획,5급,5__,길
 那,어찌 나,邑,7획,3급,3__,나
 諾,허락할 낙,言,16획,준3급,3ii,낙
+暖,따뜻한/뜨거울 난,日,13획,준4급,4ii,난
 難,어려울 난,隹,19획,준4급,4ii,난
 男,사내 남,田,7획,준7급,7ii,남
 南,남녘 남,十,9획,8급,8__,남
@@ -1677,7 +1678,6 @@ hanja,kor,radical,total_num_of_strokes,level,level_sort,sort_key
 鶴,학 학,鳥,21획,준3급,3ii,학
 寒,찰 한,宀,12획,5급,5__,한
 閑,한가할 한,門,12획,4급,4__,한
-暖,따뜻한|뜨거울 난,日,13획,준4급,4ii,한
 漢,한수/한나라 한,水,14획,준7급,7ii,한
 韓,나라이름 한,韋,17획,8급,8__,한
 汗,땀 한,水,6획,준3급,3ii,한
