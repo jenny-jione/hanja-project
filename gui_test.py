@@ -7,7 +7,8 @@ from modules.index import (
     )
 import random
 import time
-# from modules.load import load_today_file
+import csv
+from modules.load import load_today_file, load_file
 # li = load_today_file()
 
 ROW_HANJA = 0
@@ -31,7 +32,7 @@ class ReadingTest:
         self.label_total = tk.Label(window, text=" ", font=small_font)
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
-        random.shuffle(li)
+        # random.shuffle(li)
         self.entry = tk.Entry(window)
         self.entry.bind('<Return>', self.show_text)
         self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
@@ -167,6 +168,8 @@ class ReadingTest:
     def show_result(self):
         # 결과 저장
         self.save_result()
+        # 누적 결과 저장
+        self.save_accumulated_results()
         
         # 라벨, 엔트리 지우기
         self.remove_elements()
@@ -198,14 +201,40 @@ class ReadingTest:
     # TODO 창 닫기 버튼
     
     def save_result(self):
-        import csv
         with open('./data/data_today_wrong.csv', 'w') as f:
-        # with open('./data/wrong_collection.csv', 'a') as f:
             wr = csv.writer(f)
-            # wr.writerow(['level', 'hanja', 'mean', 'pron', 'hms'])
-            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 'stroke_count', 'level', 'level_sort', 'rep_pron'])
+            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 'stroke_count', 'level', 'rep_pron'])
             for data in self.result:
                 wr.writerow(data)
+    
+    # hanja,kor,radical,radical_name,stroke_count,level,rep_pron,mistake
+    def save_accumulated_results(self):
+        DATA_ACCUMULATED = './data/accumulated_results.csv'
+        datas = load_file(DATA_ACCUMULATED)
+        MISTAKE_IDX = -1
+        # hanja_dict 만들기
+        hanja_dict = {}
+        for data in datas:
+            hanja = data[0]
+            mistake = data[MISTAKE_IDX]
+            info = data[:] 
+            hanja_dict[hanja] = info
+        
+        for res in self.result:
+            res_hanja = res[0]
+            res_info = res
+            if res_hanja in hanja_dict:
+                mistake = int(hanja_dict[res_hanja][-1]) + 1
+                hanja_dict[res_hanja] = res_info + [mistake]
+            else:
+                hanja_dict[res_hanja] = res_info + ['1']
+            
+        with open(DATA_ACCUMULATED, 'w') as f:
+            wr = csv.writer(f)
+            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 
+                        'stroke_count', 'level', 'rep_pron', 'mistake'])
+            for k, v in hanja_dict.items():
+                wr.writerow(v)
     
     def remove_elements(self):
         self.label_han.grid_remove()
