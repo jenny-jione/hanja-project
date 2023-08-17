@@ -7,8 +7,8 @@ from modules.index import (
     )
 import random
 import time
-from modules.load import load_today_file
-li = load_today_file()
+# from modules.load import load_today_file
+# li = load_today_file()
 
 ROW_HANJA = 0
 ROW_KOR = 1
