@@ -1,1 +1,1 @@
-python3 gui_input.py
+python3 gui_test.py
