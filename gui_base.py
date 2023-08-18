@@ -7,7 +7,7 @@ from tkinter import font
 window = tk.Tk()
 # li = load_today_file()
 # li = load_file('./data/data_radicals.csv')
-li = load_split_file(split_num=6)
+li = load_split_file(split_num=4)
 
 def window_geometry():
     window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
@@ -65,11 +65,3 @@ normal_font = font.Font(size=normal_font_size)
 small_font = font.Font(size=small_font_size)
 # window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 window.title(window_title)
-
-
-# TODO: gui_study.py, gui_test_*.py에서 공통으로 사용하는 부분이 너무 많은데
-# 이것들도 다 이 base 파일에 넣을 수 있게 하기!!
-
-# TODO: 자동으로 100개씩 나눠서 파일 저장해주는 프로그램 만들기.
-
-# TODO: ii, __ refactor
