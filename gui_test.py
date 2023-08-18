@@ -9,7 +9,7 @@ import random
 import time
 import csv
 from modules.load import load_today_file, load_file
-# li = load_today_file()
+li = load_today_file()
 
 ROW_HANJA = 0
 ROW_KOR = 1
@@ -221,10 +221,12 @@ class ReadingTest:
             hanja_dict[hanja] = info
         
         new = 0
+        old = 0
         for res in self.result:
             res_hanja = res[0]
             res_info = res
             if res_hanja in hanja_dict:
+                old += 1
                 mistake = int(hanja_dict[res_hanja][-1]) + 1
                 hanja_dict[res_hanja] = res_info + [mistake]
             else:
@@ -238,7 +240,8 @@ class ReadingTest:
             for k, v in hanja_dict.items():
                 wr.writerow(v)
         
-        print(f'{new} datas were added.')
+        print(f'{new} data have been newly added.')
+        print(f'{old} data have increased.')
     
     def remove_elements(self):
         self.label_han.grid_remove()
