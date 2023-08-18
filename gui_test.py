@@ -9,7 +9,8 @@ import random
 import time
 import csv
 from modules.load import load_today_file, load_file
-li = load_today_file()
+# li = load_today_file()
+li = load_file('./data/seng.csv')
 
 ROW_HANJA = 0
 ROW_KOR = 1
@@ -68,14 +69,9 @@ class ReadingTest:
             # 채점
             check_result = self.check_response(answer=kor, user_response=response)
             if check_result:
-                f_str =f'right! :: {kor}'
+                f_str =f'right! :D'
             else:
-                f_str =f'wrong :: {kor}'
-                # dic = {
-                #     'han': han,
-                #     'kor': kor,
-                #     'lev': lev
-                # }
+                f_str =f'wrong :('
                 data = [han, kor, radical, radical_name, stroke_count, lev, rep_pron]
                 self.result.append(data)
             self.label_noti.config(text=f_str)
@@ -197,6 +193,11 @@ class ReadingTest:
             time_converted = f'{minute}분 {sec}초'
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
         label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
+        with open('./data/elasped.csv', 'a') as f1:
+            wr = csv.writer(f1)
+            # total, grade, percent, elasped, minute, second
+            wr.writerow([total, grade, percent, elasped, 
+                         int(elasped//60), elasped-(minute*60)])
     
     # TODO 창 닫기 버튼
     
@@ -240,8 +241,8 @@ class ReadingTest:
             for k, v in hanja_dict.items():
                 wr.writerow(v)
         
-        print(f'{new} data have been newly added.')
-        print(f'{old} data have increased.')
+        print(f'newly added : {new}')
+        print(f'increased   : {old}')
     
     def remove_elements(self):
         self.label_han.grid_remove()
