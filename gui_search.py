@@ -4,7 +4,7 @@ from modules.index import HANJA_IDX, KOR_IDX, LEVEL_IDX, RADICAL_IDX, RADICAL_NA
 from modules.load import load_all_file_with_radical
 li = load_all_file_with_radical()
 
-MAX_LENGTH = 7
+MAX_LENGTH = 13
 
 COL_HAN = 0
 COL_KOR = 1
@@ -16,7 +16,7 @@ def window_geometry():
 
 window = tk.Tk()
 width = 200
-height = 300
+height = 500
 pos_x = 1800
 pos_y = 800
 large_font_size = 16
