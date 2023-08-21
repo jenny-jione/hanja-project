@@ -10,7 +10,7 @@ import time
 import csv
 from modules.load import load_today_file, load_file
 # li = load_today_file()
-li = load_file('./data/seng.csv')
+# li = load_file('./data/seng.csv')
 
 ROW_HANJA = 0
 ROW_KOR = 1
@@ -197,7 +197,7 @@ class ReadingTest:
             wr = csv.writer(f1)
             # total, grade, percent, elasped, minute, second
             wr.writerow([total, grade, percent, elasped, 
-                         int(elasped//60), elasped-(minute*60)])
+                         int(elasped//60), elasped-((int(elasped//60))*60)])
     
     # TODO 창 닫기 버튼
     
