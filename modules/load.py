@@ -46,6 +46,7 @@ def load_file(filename: str):
 
 def load_split_file(split_num: int):
     filename_base = './data/review/data_review_split_'
+    print(f'data_split_{split_num}')
     with open(f'{filename_base}{str(split_num).zfill(2)}.csv', 'r') as f:
         rdr = csv.reader(f)
         next(rdr)
