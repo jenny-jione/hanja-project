@@ -12,7 +12,10 @@ from modules.load import load_file
 #  hanja, kor, radical, radical_name, stroke_count, level, rep_pron, mistake
 DATA_ACCUMULATED = './data/accumulated_results.csv'
 li = load_file(DATA_ACCUMULATED)
-
+CHUNK = 50
+IDX = 10
+print(f'idx: {IDX}, {IDX*CHUNK}:{(IDX+1)*CHUNK}, total: {len(li)}')
+li = li[IDX*CHUNK:(IDX+1)*CHUNK]
 
 ROW_HANJA = 0
 ROW_KOR = 1
@@ -35,7 +38,7 @@ class ReTest:
         self.label_total = tk.Label(window, text=" ", font=small_font)
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
-        random.shuffle(li)
+        # random.shuffle(li)
         self.entry = tk.Entry(window)
         self.entry.bind('<Return>', self.show_text)
         self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
@@ -52,6 +55,8 @@ class ReTest:
         self.label_total.config(text='/ ' + str(len(li)))
         
         self.good = 0
+        self.checkgood = 0
+        
         
         self.result = []
         self.start_time = time.time()
@@ -80,6 +85,7 @@ class ReTest:
             # 정답 -> mistake -= 1
             if check_result:
                 mistake -= 1
+                self.checkgood += 1
                 f_str =f'right! :D'
             # 오답 -> mistake += 1
             else:
@@ -194,7 +200,8 @@ class ReTest:
         
         # 점수 계산
         total = len(li)
-        grade = total-len(self.result)
+        # grade = total-len(self.result)
+        grade = self.checkgood
         res_txt = f'{grade}개 / {total}개'
         percent = 100*grade//total
         percent_str = f'{percent}%'
@@ -216,24 +223,23 @@ class ReTest:
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
         label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
     
-    # TODO 창 닫기 버튼
-    
-    def save_result(self):
-        with open('./data/data_today_wrong.csv', 'w') as f:
-            wr = csv.writer(f)
-            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 'stroke_count', 'level', 'rep_pron'])
-            for data in self.result:
-                wr.writerow(data)
-    
     # hanja, kor, radical, radical_name, stroke_count, level, rep_pron, mistake
     def update_accumulated_results(self):
-        with open(DATA_ACCUMULATED, 'w') as f:
+        with open('./data/accumulated_results__test.csv', 'a') as f:
             wr = csv.writer(f)
-            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 
-                        'stroke_count', 'level', 'rep_pron', 'mistake'])
+            wr = csv.writer(f)
             for row in self.result:
                 wr.writerow(row)
-        
+        # with open(DATA_ACCUMULATED, 'w') as f:
+            # wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 
+            #             'stroke_count', 'level', 'rep_pron', 'mistake'])
+            # for row in self.result:
+            #     wr.writerow(row)
+        grade = self.checkgood
+        total = len(li)
+        percent = 100*grade//total
+
+        print(f'{grade}/{total}, {percent}%')
         print(f'{self.good} :: dobi is free !')
     
     def remove_elements(self):
