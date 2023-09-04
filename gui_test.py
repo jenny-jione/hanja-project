@@ -10,7 +10,14 @@ import time
 import csv
 from modules.load import load_today_file, load_file
 # li = load_today_file()
-# li = load_file('./data/seng.csv')
+li = load_file('./data/seng.csv')
+LEN = len(li)
+idx = 9
+CHUNK = 50
+start_idx = idx*CHUNK
+end_idx = (idx+1)*CHUNK
+print(f'{LEN} -- {start_idx}:{end_idx}')
+li = li[start_idx:end_idx]
 
 ROW_HANJA = 0
 ROW_KOR = 1
