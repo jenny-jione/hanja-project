@@ -5,9 +5,6 @@ from modules.load import load_file, load_today_file, load_split_file
 from tkinter import font
 
 window = tk.Tk()
-# li = load_today_file()
-# li = load_file('./data/data_radicals.csv')
-li = load_split_file(split_num=19)
 
 def window_geometry():
     window.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
