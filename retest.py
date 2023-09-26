@@ -12,10 +12,15 @@ from modules.load import load_file
 #  hanja, kor, radical, radical_name, stroke_count, level, rep_pron, mistake
 DATA_ACCUMULATED = './data/accumulated_results.csv'
 li = load_file(DATA_ACCUMULATED)
-CHUNK = 50
-IDX = 10
-print(f'idx: {IDX}, {IDX*CHUNK}:{(IDX+1)*CHUNK}, total: {len(li)}')
-li = li[IDX*CHUNK:(IDX+1)*CHUNK]
+CHUNK = 5
+# IDX = 10
+# print(f'idx: {IDX}, {IDX*CHUNK}:{(IDX+1)*CHUNK}, total: {len(li)}')
+# li = li[IDX*CHUNK:(IDX+1)*CHUNK]
+random.shuffle(li)
+li_res = li[CHUNK:]
+li = li[:CHUNK]
+print(len(li_res))
+print(len(li))
 
 ROW_HANJA = 0
 ROW_KOR = 1
@@ -225,16 +230,17 @@ class ReTest:
     
     # hanja, kor, radical, radical_name, stroke_count, level, rep_pron, mistake
     def update_accumulated_results(self):
-        with open('./data/accumulated_results__test.csv', 'a') as f:
+        with open(DATA_ACCUMULATED, 'w') as f:
             wr = csv.writer(f)
-            wr = csv.writer(f)
+            wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 
+                        'stroke_count', 'level', 'rep_pron', 'mistake'])
             for row in self.result:
                 wr.writerow(row)
-        # with open(DATA_ACCUMULATED, 'w') as f:
-            # wr.writerow(['hanja', 'kor', 'radical', 'radical_name', 
-            #             'stroke_count', 'level', 'rep_pron', 'mistake'])
-            # for row in self.result:
-            #     wr.writerow(row)
+            
+            # rest
+            for row_res in li_res:
+                wr.writerow(row_res)
+            
         grade = self.checkgood
         total = len(li)
         percent = 100*grade//total
