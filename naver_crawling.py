@@ -30,21 +30,24 @@ def get_data(hanja: str, driver: webdriver.Chrome):
     words_div = driver.find_elements(By.CLASS_NAME, "row")
     for word_row in words_div:
         word_div = word_row.find_element(By.CLASS_NAME, "origin")
-        word = word_div.find_element(By.TAG_NAME, "a")
-        # print(word.text)
+        a_tag = word_div.find_element(By.TAG_NAME, "a")
+        word = a_tag.text
+        link = a_tag.get_attribute('href')
+        # print('link:', link)
 
         kor_div = word_div.find_element(By.CLASS_NAME, "mean")
         kor = kor_div.text
         # print(kor)
 
-        mean_ul = word_row.find_element(By.TAG_NAME, "ul")
-        mean_items = mean_ul.find_elements(By.CLASS_NAME, "mean_item")
+        # mean_ul = word_row.find_element(By.TAG_NAME, "ul")
+        # mean_items = mean_ul.find_elements(By.CLASS_NAME, "mean_item")
         # print(len(mean_items))
 
         # for mean_item in mean_items:
         #     print(mean_item.text)
         # print()
     
+
     # 예시 성어 수집 (예: 검색한자가 托이면 托가 들어간 예시 성어 n개 수집)
     idioms_btn = radio_btns[2]
     idioms_btn.click()
@@ -53,14 +56,14 @@ def get_data(hanja: str, driver: webdriver.Chrome):
     idioms_div = driver.find_elements(By.CLASS_NAME, "row")
     # print(len(idioms_div))
     for idiom_row in idioms_div:
-        idiom_div = idiom_row.find_element(By.CLASS_NAME, "origin")
-        idiom = idiom_div.find_element(By.TAG_NAME, "a")
-        idiom_kor = idiom_div.find_element(By.CLASS_NAME, "mean")
+        origin_div = idiom_row.find_element(By.CLASS_NAME, "origin")
+        a_tag = origin_div.find_element(By.TAG_NAME, "a")
+        idiom = a_tag.text
+        idiom_kor_div = origin_div.find_element(By.CLASS_NAME, "mean")
+        idiom_kor = idiom_kor_div.text
         idiom_mean = idiom_row.find_element(By.CLASS_NAME, "mean_list")
 
-        # print(idiom.text, ': ', idiom_kor.text)
-        # print(idiom_mean.text)
-        # print()
+        print(idiom, idiom_kor)
 
 
 if __name__ == "__main__":    
@@ -69,7 +72,8 @@ if __name__ == "__main__":
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     
     result = []
-    for hanja in hanja_list[:10]:
+    for hanja in hanja_list[:1]:
+        print(hanja)
         get_data(hanja, driver)
         
     driver.quit()
