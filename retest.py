@@ -12,7 +12,7 @@ from modules.load import load_file
 #  hanja, kor, radical, radical_name, stroke_count, level, rep_pron, mistake
 DATA_ACCUMULATED = './data/accumulated_results.csv'
 li = load_file(DATA_ACCUMULATED)
-CHUNK = 5
+CHUNK = 30
 # IDX = 10
 # print(f'idx: {IDX}, {IDX*CHUNK}:{(IDX+1)*CHUNK}, total: {len(li)}')
 # li = li[IDX*CHUNK:(IDX+1)*CHUNK]
