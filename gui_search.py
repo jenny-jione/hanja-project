@@ -36,8 +36,6 @@ window.title(window_title)
 
 class Search:
     def __init__(self):
-        self.cur_idx = 0
-        self.ans = 1
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
         window.grid_columnconfigure(2, weight=1)  # Column 2 will also expand for label_new
