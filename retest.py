@@ -108,7 +108,7 @@ class ReTest:
             # 만약 mistake == 0 이면 append하지 않음.
             # self.result.append(data)
 
-            self.label_noti.config(text=f_str)
+            self.label_noti.config(text=f_str + f' ({mistake})')
         else:
             self.entry.delete(0, tk.END)
             
@@ -246,7 +246,7 @@ class ReTest:
         percent = 100*grade//total
 
         print(f'{grade}/{total}, {percent}%')
-        print(f'{self.good} :: dobi is free !')
+        print(f'{self.good} :: exit')
     
     def remove_elements(self):
         self.label_han.grid_remove()
