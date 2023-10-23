@@ -147,8 +147,12 @@ class ReadingTest:
         if len(resp_h_sorted) == 1:
             if (res_h in ans) and (res_m == ans_m):
                 return True
-            else:
-                return False
+            # else:
+            #     return False
+        
+        if '할' in res_h:
+            if (ans_h in res_h) and (res_m == ans_m):
+                return True
 
         return False
 
