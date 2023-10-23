@@ -165,7 +165,7 @@ class ReadingTest:
     
     def show_result(self):
         # 결과 저장
-        self.save_result()
+        # self.save_result()
         # 누적 결과 저장
         self.save_accumulated_results()
         
