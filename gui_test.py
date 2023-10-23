@@ -8,17 +8,9 @@ from modules.index import (
 import random
 import time
 import csv
-from modules.load import load_today_file, load_file, load_all_file_with_radical
-# li = load_today_file()
+from modules.load import load_file, load_all_file_with_radical
 # li = load_file('./data/seng.csv')
 li = load_all_file_with_radical()
-# LEN = len(li)
-# idx = 9
-# CHUNK = 50
-# start_idx = idx*CHUNK
-# end_idx = (idx+1)*CHUNK
-# print(f'{LEN} -- {start_idx}:{end_idx}')
-# li = li[start_idx:end_idx]
 random.shuffle(li)
 li = li[:50]
 
