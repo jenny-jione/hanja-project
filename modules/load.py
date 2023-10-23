@@ -22,6 +22,17 @@ def load_all_file_with_radical():
     return tuple_list
 
 
+def load_radical_sub():
+    with open('./data/data_radicals_sub.csv', 'r') as f:
+        rdr = csv.reader(f)
+        next(rdr)
+        
+        tuple_list = []
+        for row in rdr:
+            tuple_list.append(tuple(row))
+    return tuple_list    
+
+
 def load_today_file():
     with open('./data/data_today_wrong.csv', 'r') as f:
         rdr = csv.reader(f)
