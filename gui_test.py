@@ -96,18 +96,23 @@ class ReadingTest:
         # 100% 일치
         if user_response == answer:
             return True
-        user_response_splited = user_response.split('|')
-        answer_splited = answer.split('|')
+        user_response_splited: list = user_response.split('|')
+        answer_splited: list = answer.split('|')
         
         # | split 후 개수가 다를 경우 바로 False 반환
         if len(answer_splited) != len(user_response_splited):
             return False
         
-        # 정렬 후 일치
-        if sorted(user_response_splited) == sorted(answer_splited):
+        # 음 기준으로 정렬
+        answer_splited.sort(key=lambda x:x[-1])
+        user_response_splited.sort(key=lambda x:x[-1])
+        
+        # 완전일치할 경우 바로 True 반환
+        if user_response_splited == answer_splited:
             return True
         
-        check = False
+        # 완전일치하지 않을 경우 (/가 들어간 경우)
+        check = False        
         for ans, resp in zip(answer_splited, user_response_splited):
             check = self.check_one(ans=ans, res=resp)
             if not check:
@@ -171,7 +176,7 @@ class ReadingTest:
         # 결과 저장
         # self.save_result()
         # 누적 결과 저장
-        self.save_accumulated_results()
+        # self.save_accumulated_results()
         
         # 라벨, 엔트리 지우기
         self.remove_elements()
