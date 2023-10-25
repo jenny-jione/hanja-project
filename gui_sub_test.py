@@ -13,6 +13,7 @@ from modules.load import load_radical_sub
 # li = load_file('./data/seng.csv')
 # li = load_all_file_with_radical()
 li = load_radical_sub()
+print(len(li))
 random.shuffle(li)
 CHUNK = 50
 li_res = li[CHUNK:]
