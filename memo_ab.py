@@ -23,6 +23,7 @@ with open('./memo_ab.csv', 'r') as f:
         line = []
         for h in rd:
             line.append((h, stroke[h]))
+        line = list(set(line)) # 중복 제거
         line_sort = sorted(line, key=lambda x: x[1])
         lines.append(line_sort)
 
