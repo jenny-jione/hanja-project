@@ -176,7 +176,7 @@ class ReadingTest:
         # 결과 저장
         # self.save_result()
         # 누적 결과 저장
-        # self.save_accumulated_results()
+        self.save_accumulated_results()
         
         # 라벨, 엔트리 지우기
         self.remove_elements()
