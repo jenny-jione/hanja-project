@@ -86,6 +86,9 @@ class ReadingTest:
             self.label_noti.config(text='')
             self.label_radical.config(text='')
 
+            # TODO: 결과창에 그 한자의 용례 몇개 같이 보여주기
+            # 예: 가공(架空), 가교(架橋), 가설(架設), 가옥(架屋), 갸자(架▽子), 고가(高架), 고가도로(高架道路)
+
     # 입력값 판단
     # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
     def check_response(self, answer, user_response):
