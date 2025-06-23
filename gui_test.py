@@ -54,6 +54,16 @@ class ReadingTest:
         
         self.result = []
         self.start_time = time.time()
+
+    def load_accumulated_mistakes(self):
+        path = './data/accumulated_results.csv'
+        data = load_file(path)
+        mistake_dict = {}
+        for row in data[1:]:  # 헤더 제외
+            hanja = row[HANJA_IDX]
+            mistake = int(row[-1])  # 마지막 컬럼이 누적 오답 횟수
+            mistake_dict[hanja] = mistake
+        return mistake_dict
     
     def show_text(self, event):
         self.ans += 1
@@ -208,6 +218,9 @@ class ReadingTest:
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
         label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
 
+        # 누적 오답 횟수 로드
+        mistake_dict = self.load_accumulated_mistakes()
+
         # 출제된 한자 50개 + 맞음/틀림 여부 표시
         hanja_info_list = []
         wrong_set = {row[HANJA_IDX] for row in self.result}  # 틀린 한자만 모아둠
@@ -215,8 +228,9 @@ class ReadingTest:
         for row in li:
             hanja = row[HANJA_IDX]
             kor = row[KOR_IDX]
+            mistake_count = mistake_dict.get(hanja, 0)  # 없으면 0회
             result_str = '❌' if hanja in wrong_set else '✅'
-            hanja_info_list.append(f" {result_str} {hanja} / {kor}")
+            hanja_info_list.append(f"{result_str} {hanja} / {kor} / 누적: {mistake_count}회")
 
         hanja_info_text = '\n'.join(hanja_info_list)
 
