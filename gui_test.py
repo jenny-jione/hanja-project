@@ -204,6 +204,27 @@ class ReadingTest:
             time_converted = f'{minute}분 {sec}초'
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
         label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
+
+        # 출제된 한자 50개 + 맞음/틀림 여부 표시
+        hanja_info_list = []
+        wrong_set = {row[HANJA_IDX] for row in self.result}  # 틀린 한자만 모아둠
+
+        for row in li:
+            hanja = row[HANJA_IDX]
+            kor = row[KOR_IDX]
+            result_str = '❌' if hanja in wrong_set else '✅'
+            hanja_info_list.append(f" {result_str} {hanja} / {kor}")
+
+        hanja_info_text = '\n'.join(hanja_info_list)
+
+        label_hanja_list_title = tk.Label(window, text='[이번 시험에 나온 한자 목록]', font=normal_font)
+        label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2)
+
+        label_hanja_list = tk.Label(
+            window, text=hanja_info_text, font=small_font, justify="left", anchor="w"
+        )
+        label_hanja_list.grid(row=ROW_TIME+3, column=0, columnspan=2, sticky="w")
+
         with open('./data/elasped.csv', 'a') as f1:
             wr = csv.writer(f1)
             # total, grade, percent, elasped, minute, second
