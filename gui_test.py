@@ -9,6 +9,8 @@ import random
 import time
 import csv
 from modules.load import load_file, load_all_file_with_radical
+from collections import defaultdict
+
 # li = load_file('./data/seng.csv')
 li = load_all_file_with_radical()
 random.shuffle(li)
@@ -51,6 +53,10 @@ class ReadingTest:
         self.label_index.config(text=self.cur_idx+1)
         self.label_total.config(text='/ ' + str(len(li)))
         
+        self.hanja_word_dict = self.load_word_example()
+        self.label_hanja_list = tk.Label(window, text="", font=small_font, justify="left", anchor="w")
+        self.label_hanja_list.grid(row=ROW_TIME+3, column=0, columnspan=2, sticky="w")
+
         
         self.result = []
         self.start_time = time.time()
@@ -65,6 +71,18 @@ class ReadingTest:
             mistake_dict[hanja] = mistake
         return mistake_dict
     
+    def load_word_example(self):
+        path = './example_word.csv'
+        hanja_word_dict = defaultdict(list)
+        target_h = [x[0] for x in li]
+
+        with open(path, 'r') as f:
+            rdr = csv.reader(f)        
+            for row in rdr:
+                if row[0] in target_h and len(row[1])>1:
+                    hanja_word_dict[row[0]].append(row[1:3])
+        return hanja_word_dict
+
     def show_text(self, event):
         self.ans += 1
         # 입력값 변수에 저장
@@ -87,6 +105,13 @@ class ReadingTest:
                 data = [han, kor, radical, radical_name, stroke_count, lev, rep_pron]
                 self.result.append(data)
             self.label_noti.config(text=f_str)
+
+            print(f'<{han} {kor}>')
+            word_example_list = [f'{row[0]} ({row[1]})' for row in self.hanja_word_dict[han]]
+            word_example_text = '\n'.join(word_example_list)
+            print(word_example_text)
+            self.label_hanja_list.config(text=word_example_text)
+
         else:
             self.entry.delete(0, tk.END)
             
@@ -95,9 +120,7 @@ class ReadingTest:
             self.label_lev.config(text='')
             self.label_noti.config(text='')
             self.label_radical.config(text='')
-
-            # TODO: 결과창에 그 한자의 용례 몇개 같이 보여주기
-            # 예: 가공(架空), 가교(架橋), 가설(架設), 가옥(架屋), 갸자(架▽子), 고가(高架), 고가도로(高架道路)
+            self.label_hanja_list.config(text='')
 
     # 입력값 판단
     # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
@@ -234,8 +257,8 @@ class ReadingTest:
 
         hanja_info_text = '\n'.join(hanja_info_list)
 
-        label_hanja_list_title = tk.Label(window, text='[이번 시험에 나온 한자 목록]', font=normal_font)
-        label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2)
+        label_hanja_list_title = tk.Label(window, text='[이번 시험에 나온 한자 목록]', font=small_font, justify="left")
+        label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2, sticky="w")
 
         label_hanja_list = tk.Label(
             window, text=hanja_info_text, font=small_font, justify="left", anchor="w"
