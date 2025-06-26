@@ -76,7 +76,6 @@ class ReadingTest:
         for hanja, h_word_list in hanja_word_dict.items():
             extra_info = hanja_info_dict.get(hanja, []) 
             word_data.append(([hanja] + random.choice(h_word_list) + list(extra_info)))
-            print(word_data[-1])
         return word_data
         # [hanja, word, kor]
 
