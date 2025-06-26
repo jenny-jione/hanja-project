@@ -160,6 +160,8 @@ class ReadingTest:
         hanja_info_list = []
         wrong_set = {row[HANJA_IDX] for row in self.result}  # 틀린 한자만 모아둠
         print(wrong_set)
+        for word in self.word_data:
+            print(word)
 
         for row in self.word_data:
             word = row[WORD_IDX]
