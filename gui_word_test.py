@@ -220,6 +220,7 @@ class ReadingTest:
             hanja_info_list.append(f"{result_str} {word} / {reading} / {ch_result}")
 
         hanja_info_text = '\n'.join(hanja_info_list)
+        print(hanja_info_text)
 
         label_hanja_list_title = tk.Label(window, text='[시험 목록]', font=small_font, justify="left")
         label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2, sticky="w")
