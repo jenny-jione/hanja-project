@@ -138,7 +138,6 @@ class ReadingTest:
             
             self.update_labels()
             self.label_kor.config(text='')
-            self.label_lev.config(text='')
             self.label_noti.config(text='')
             self.label_hanja_info.config(text='')
 
