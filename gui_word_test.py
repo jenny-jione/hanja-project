@@ -52,12 +52,14 @@ class ReadingTest:
         # 1817개 한자 dictionary
         self.hanja_info_dict = self.make_hanja_info_dict()
         self.word_data = self.get_word_test_data()
+        self.wrong_count = 0 # 문제 오답 개수
 
         self.label_han.config(text=self.word_data[0][WORD_IDX])
         self.label_index.config(text=self.cur_idx+1)
         self.label_total.config(text='/ ' + str(len(li)))
         
-        self.result = []
+        self.result = [] # 오답 단어 저장용 리스트 (한 단어 단위)
+        self.wrong_result = set() # 오답 한자 저장용 set (한글자 단위)
         self.start_time = time.time()
 
     # 전체 한자 데이터 리스트 가져오는 함수
@@ -112,13 +114,17 @@ class ReadingTest:
             self.ans = 0
             
             # 채점
-            check_result = self.check_response(answer=kor, user_response=response)
-            if check_result:
-                f_str =f'right! :D'
-            else:
+            wrong_idx_result = self.check_response(answer=quiz_answer, user_response=response)
+            if wrong_idx_result:
                 f_str =f'wrong :('
-                data = [han, kor]
+                for idx in wrong_idx_result:
+                    self.wrong_result.add(quiz_word[idx])
+                data = [quiz_word, quiz_answer]
                 self.result.append(data)
+                self.wrong_count += 1
+            else:
+                f_str =f'right! :D'
+                
             self.label_noti.config(text=f_str)
 
 
@@ -133,10 +139,25 @@ class ReadingTest:
 
     # 입력값 판단
     # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
-    def check_response(self, answer, user_response):
-        if user_response == answer:
-            return True
-        return False
+    def check_response(self, answer: str, user_response: str):
+        answer = answer.strip()
+        resp = user_response.strip()
+
+        if len(resp) < len(answer):
+            resp += '_' * (len(answer)-len(resp))
+        else:
+            resp = resp[:len(answer)]    
+
+        res = list(resp)
+        ans = list(answer)
+
+        wrong_idx = []
+
+        for i, (res_ch, ans_ch) in enumerate(zip(res, ans)):
+            if res_ch != ans_ch:
+                wrong_idx.append(i)
+        
+        return wrong_idx
 
     def update_labels(self):
         self.cur_idx += 1
