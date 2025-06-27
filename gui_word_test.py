@@ -17,8 +17,8 @@ READING_IDX = 2
 ROW_HANJA = 0
 ROW_KOR = 1
 ROW_NOTI = ROW_CLOSING = 2
-ROW_LEVEL = ROW_RESULT = 3
-ROW_RADICAL = ROW_GRADE = 4
+ROW_INFO = ROW_RESULT = 3
+ROW_GRADE = 4
 ROW_ENTRY = ROW_TIME = 5
 ROW_PROGRESS = 6
 
@@ -103,11 +103,11 @@ class ReadingTest:
         self.ans += 1
         # 입력값 변수에 저장
         response = self.entry.get()
-        han, kor = self.get_data()
-        
+        quiz_word, quiz_answer = self.get_data()
+
         if self.ans == 2:
             # 정답 노출
-            self.label_kor.config(text=kor)
+            self.label_kor.config(text=quiz_answer)
             self.ans = 0
             
             # 채점
@@ -205,10 +205,7 @@ class ReadingTest:
 
         # 출제된 한자 50개 + 맞음/틀림 여부 표시
         hanja_info_list = []
-        wrong_set = {row[HANJA_IDX] for row in self.result}  # 틀린 한자만 모아둠
-        print(wrong_set)
-        for word in self.word_data:
-            print(word)
+        wrong_word = {row[HANJA_IDX] for row in self.result}  # 틀린 단어만 모아둠
 
         for row in self.word_data:
             word = row[WORD_IDX]
