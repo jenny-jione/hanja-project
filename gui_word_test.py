@@ -47,7 +47,10 @@ class ReadingTest:
         self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
         self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
 
-
+        # 1817개 전체 한자 data
+        self.hanja_data = self.get_hanja_data()
+        # 1817개 한자 dictionary
+        self.hanja_info_dict = self.make_hanja_info_dict()
         self.word_data = self.get_word_test_data()
 
         self.label_han.config(text=self.word_data[0][WORD_IDX])
@@ -57,15 +60,33 @@ class ReadingTest:
         self.result = []
         self.start_time = time.time()
 
+    # 전체 한자 데이터 리스트 가져오는 함수
+    def get_hanja_data(self):
+        return load_all_file_with_radical()
+    
+    # 전체 한자 데이터에서 dictionary 만들기
+    def make_hanja_info_dict(self):
+        return {row[0]: row[1:] for row in self.hanja_data}
+
     # 하나의 한자의 여러 용례 중에 하나 뽑아서 문제 set 만들기
+    """
+    output:
+    word_data
+        [hanja, 용례 랜덤, extra_info]
+        ...
+        ['稀', '稀貴', '희귀', '稀', '드물 희', '禾', '12획', '준3급', '3ii', '희']
+    """
     def get_word_test_data(self):
         path = './word_test_data.csv'
-        
-        hanja_info_dict = {row[0]: row[1:] for row in li}
-        target_h = set(hanja_info_dict.keys())
 
+        # quiz_data = 전체 한자 데이터(self.hanja_data) 중 QUIZ_COUNT개 만큼 뽑은 리스트
+        random.shuffle(self.hanja_data)
+        quiz_data = self.hanja_data[:QUIZ_COUNT]
+
+        target_h = [q[0] for q in quiz_data]
+
+        # word_test_data.csv에서 해당 한자의 용례 1개 랜덤으로 뽑기
         hanja_word_dict = defaultdict(list)
-
         with open(path, 'r') as f:
             rdr = csv.reader(f)        
             for row in rdr:
@@ -74,10 +95,10 @@ class ReadingTest:
 
         word_data = []
         for hanja, h_word_list in hanja_word_dict.items():
-            extra_info = hanja_info_dict.get(hanja, []) 
+            extra_info = self.hanja_info_dict.get(hanja, [])
             word_data.append(([hanja] + random.choice(h_word_list) + list(extra_info)))
         return word_data
-        # [hanja, word, kor]
+
 
     def show_text(self, event):
         self.ans += 1
