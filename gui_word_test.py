@@ -29,8 +29,7 @@ class ReadingTest:
         self.ans = 1
         self.label_han = tk.Label(window, text=" ", anchor="w", font=large_font)
         self.label_kor = tk.Label(window, text=" ", font=normal_font)
-        self.label_radical = tk.Label(window, text=" ", font=small_font)
-        self.label_lev = tk.Label(window, text=" ", font=small_font)
+        self.label_hanja_info = tk.Label(window, text=" ", font=small_font)
         self.label_noti = tk.Label(window, text='', font=normal_font)
         self.label_index = tk.Label(window, text=" ", font=small_font)
         self.label_total = tk.Label(window, text=" ", font=small_font)
@@ -41,8 +40,7 @@ class ReadingTest:
         self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
         self.label_kor.grid(row=ROW_KOR, column=0, columnspan=2)
         self.label_noti.grid(row=ROW_NOTI, columnspan=2)
-        self.label_lev.grid(row=ROW_LEVEL, column=0, columnspan=2)
-        self.label_radical.grid(row=ROW_RADICAL, column=0, columnspan=2)
+        self.label_hanja_info.grid(row=ROW_INFO, column=0, columnspan=2)
         self.entry.grid(row=ROW_ENTRY, columnspan=2)
         self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
         self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
@@ -127,6 +125,14 @@ class ReadingTest:
                 
             self.label_noti.config(text=f_str)
 
+            # 단어의 각 한자 훈음 공개 - 武:호반 무 / 士:선비 사
+            han_kor = []
+            for hanja in quiz_word:
+                kor = self.hanja_info_dict[hanja][0]
+                han_kor.append(f'{hanja}:{kor}')
+            hanja_info_str = ' / '.join(han_kor)
+            self.label_hanja_info.config(text=hanja_info_str)
+
 
         else:
             self.entry.delete(0, tk.END)
@@ -135,7 +141,7 @@ class ReadingTest:
             self.label_kor.config(text='')
             self.label_lev.config(text='')
             self.label_noti.config(text='')
-            self.label_radical.config(text='')
+            self.label_hanja_info.config(text='')
 
     # 입력값 판단
     # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
