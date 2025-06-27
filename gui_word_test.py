@@ -7,9 +7,8 @@ import csv
 from modules.load import load_all_file_with_radical
 from collections import defaultdict
 
-li = load_all_file_with_radical()
-random.shuffle(li)
-li = li[:10]
+
+QUIZ_COUNT = 10
 
 HANJA_IDX = 0
 WORD_IDX = 1
@@ -54,7 +53,7 @@ class ReadingTest:
 
         self.label_han.config(text=self.word_data[0][WORD_IDX])
         self.label_index.config(text=self.cur_idx+1)
-        self.label_total.config(text='/ ' + str(len(li)))
+        self.label_total.config(text='/ ' + str(QUIZ_COUNT))
         
         self.result = [] # 오답 단어 저장용 리스트 (한 단어 단위)
         self.wrong_result = set() # 오답 한자 저장용 set (한글자 단위)
@@ -169,7 +168,7 @@ class ReadingTest:
         self.cur_idx += 1
         if self.cur_idx > 0:
             self.entry.grid(row=ROW_ENTRY, columnspan=2)
-        if self.cur_idx < len(li):
+        if self.cur_idx < QUIZ_COUNT:
             han, _ = self.get_data()
             self.label_han.config(text=han)
             self.label_index.config(text=self.cur_idx+1)
@@ -181,7 +180,7 @@ class ReadingTest:
         self.remove_elements()
         
         # 점수 계산
-        total = len(li)
+        total = QUIZ_COUNT
         grade = total-len(self.result)
         res_txt = f'{grade}개 / {total}개'
         percent = 100*grade//total
@@ -214,8 +213,15 @@ class ReadingTest:
         for row in self.word_data:
             word = row[WORD_IDX]
             reading = row[READING_IDX]
-            result_str = '❌' if word in wrong_set else '✅'
-            hanja_info_list.append(f"{result_str} {word} / {reading}")
+            result_str = '❌' if word in wrong_word else '✅'
+            ch_result = ''
+            for ch in word:
+                ch_result += f'{ch}:{self.hanja_info_dict[ch][0]}'
+                if ch in self.wrong_result:
+                    ch_result += '(X) '
+                else:
+                    ch_result += '(O) '
+            hanja_info_list.append(f"{result_str} {word} / {reading} / {ch_result}")
 
         hanja_info_text = '\n'.join(hanja_info_list)
 
