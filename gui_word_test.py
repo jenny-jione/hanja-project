@@ -231,10 +231,17 @@ class ReadingTest:
         label_hanja_list.grid(row=ROW_TIME+3, column=0, columnspan=2, sticky="w")
 
        
-    # TODO 창 닫기 버튼
-    # TODO: 
-    # 巧言 -> _언 으로 입력했을 경우 (정답: 교언)
-    # [교]는 오답처리, [언]은 정답처리 후 오답 한자만 기록하는 기능 만들기
+    # TODO: 창 닫기 버튼 기능 구현
+
+    # TODO: 일부만 맞춘 경우, 정답 처리된 한자는 제외하고 오답 한자만 오답 CSV에 기록하기
+    # 예: '巧言'에 대해 사용자가 '_언'을 입력한 경우 (정답: 교언)
+    # → [언]은 정답 처리되고, [교]만 오답으로 간주하여 기록
+    
+    # TODO: word_test_data.csv 내용을 자주 쓰는 단어 중심으로 교체할 것
+    # 기존 단어 예: 可,十丈水裏可知一丈人裏不可知,십장수리가지 일장인리불가지
+    # 변경 단어 예: 可,可能,가능
+    # 뜻도 추가하기.
+    # 예: 可,可能,가능,할 수 있거나 될 수 있음.
     
     def remove_elements(self):
         self.label_han.grid_remove()
