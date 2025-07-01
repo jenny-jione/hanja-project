@@ -8,3 +8,4 @@ server/
 .DS_Store
 *.log
 word_test_data_meaning.csv
+word_test_result.txt
