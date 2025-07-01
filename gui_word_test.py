@@ -53,9 +53,17 @@ class ReadingTest:
         self.label_kor.grid(row=ROW_KOR, column=0, columnspan=2)
         self.label_noti.grid(row=ROW_NOTI, columnspan=2)
         self.label_hanja_info.grid(row=ROW_INFO, column=0, columnspan=2)
-        self.entry.grid(row=ROW_ENTRY, columnspan=2)
-        self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
-        self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
+        
+        self.msg_meaning = tk.Message(window, text="", width=480, font=small_font)
+        self.msg_meaning.grid(row=ROW_INFO + 1, column=0, columnspan=2, padx=10, pady=5)
+
+        self.entry.grid(row=ROW_INFO + 2, columnspan=2)
+        self.label_index.grid(row=ROW_INFO + 3, column=0, sticky="e")  # Use sticky="e" for right-align
+        self.label_total.grid(row=ROW_INFO + 3, column=1, sticky="w")  # Use sticky="w" for left-align
+
+        # self.entry.grid(row=ROW_ENTRY, columnspan=2)
+        # self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
+        # self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
 
         # 1817개 전체 한자 data
         self.hanja_data = self.get_hanja_data()
@@ -89,7 +97,7 @@ class ReadingTest:
         ['稀', '稀貴', '희귀', '稀', '드물 희', '禾', '12획', '준3급', '3ii', '희']
     """
     def get_word_test_data(self):
-        path = './word_test_data.csv'
+        path = './word_test_data_meaning.csv'
 
         # quiz_data = 전체 한자 데이터(self.hanja_data) 중 QUIZ_COUNT개 만큼 뽑은 리스트
         random.shuffle(self.hanja_data)
@@ -103,7 +111,8 @@ class ReadingTest:
             rdr = csv.reader(f)        
             for row in rdr:
                 if row[0] in target_h:
-                    hanja_word_dict[row[0]].append(row[1:3])
+                    # row[1:4] = ['意志', '의지', '어떠한 일을 이루고자 하는 마음.']
+                    hanja_word_dict[row[0]].append(row[1:4])
 
         word_data = []
         for hanja, h_word_list in hanja_word_dict.items():
@@ -116,7 +125,7 @@ class ReadingTest:
         self.ans += 1
         # 입력값 변수에 저장
         response = self.entry.get()
-        quiz_word, quiz_answer = self.get_data()
+        quiz_word, quiz_answer, quiz_meaning = self.get_data()
 
         if self.ans == 2:
             # 정답 노출
@@ -144,15 +153,16 @@ class ReadingTest:
                 han_kor.append(f'{hanja}:{kor}')
             hanja_info_str = ' / '.join(han_kor)
             self.label_hanja_info.config(text=hanja_info_str)
-
+            self.msg_meaning.config(text=quiz_meaning)
 
         else:
             self.entry.delete(0, tk.END)
-            
             self.update_labels()
             self.label_kor.config(text='')
             self.label_noti.config(text='')
             self.label_hanja_info.config(text='')
+            self.msg_meaning.config(text="")
+
 
     # 입력값 판단
     # answer: csv에 저장된 정답, user_response: 사용자가 입력한 답안
@@ -181,7 +191,7 @@ class ReadingTest:
         if self.cur_idx > 0:
             self.entry.grid(row=ROW_ENTRY, columnspan=2)
         if self.cur_idx < QUIZ_COUNT:
-            han, _ = self.get_data()
+            han, _, _ = self.get_data()
             self.label_han.config(text=han)
             self.label_index.config(text=self.cur_idx+1)
         else:
@@ -264,9 +274,12 @@ class ReadingTest:
         self.label_total.grid_remove()
     
     def get_data(self):
+        # self.word_data 형식: [한자, 한자단어, 한국어발음, 단어뜻, 한자 훈음, 부수 한자, 부수 훈음, 획수, 급수, 음]
+        # self.word_data[] = ['兼', '兼府兼牧處', '겸부겸목처', '관찰사(觀察使)가 부사(府使)나 목사(牧使)를 겸임하는 부와 목.', '겸할 겸', '八', '여덟 팔', '10', '준3급', '겸']
         han = self.word_data[self.cur_idx][WORD_IDX]
         kor = self.word_data[self.cur_idx][READING_IDX]
-        return han, kor
+        meaning = self.word_data[self.cur_idx][3]
+        return han, kor, meaning
 
 
 test_base = ReadingTest()
