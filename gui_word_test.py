@@ -22,6 +22,19 @@ ROW_GRADE = 4
 ROW_ENTRY = ROW_TIME = 5
 ROW_PROGRESS = 6
 
+# TODO: 행 인덱스 상수들을 Row(IntEnum) enum으로 정리할 예정
+# 예시: 행 인덱스 enum 구조
+# from enum import IntEnum, auto
+# class Row(IntEnum):
+#     HANJA    = 0
+#     KOR      = auto()
+#     NOTI     = auto()
+#     INFO     = auto()
+#     MEANING  = auto()
+#     ENTRY    = auto()
+#     PROGRESS = auto()
+
+
 class ReadingTest:
     def __init__(self):
         self.cur_idx = 0
