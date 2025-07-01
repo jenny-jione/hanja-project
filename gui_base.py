@@ -42,6 +42,12 @@ def setting(type: str):
                 large_font_size = 30
                 normal_font_size = 15
                 small_font_size = 13
+            elif 'small' in type:
+                width = 500
+                height = 400
+                large_font_size = 50
+                normal_font_size = 15
+                small_font_size = 10
             else:
                 width = 500
                 height = 650
