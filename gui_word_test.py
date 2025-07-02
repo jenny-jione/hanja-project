@@ -88,15 +88,14 @@ class ReadingTest:
     def make_hanja_info_dict(self):
         return {row[0]: row[1:] for row in self.hanja_data}
 
-    # 하나의 한자의 여러 용례 중에 하나 뽑아서 문제 set 만들기
-    """
-    output:
-    word_data
-        [hanja, 용례 랜덤, extra_info]
-        ...
-        ['稀', '稀貴', '희귀', '稀', '드물 희', '禾', '12획', '준3급', '3ii', '희']
-    """
+    # 하나의 한자의 여러 용례 중에서 하나를 뽑아 문제 세트를 만듦
     def get_word_test_data(self):
+        """
+        Returns:
+            word_data (list of lists): 각 항목은 다음과 같은 구조를 가짐
+                [hanja, 랜덤으로 고른 용례, extra_info...]
+                예: ['稀', '稀貴', '희귀', '稀', '드물 희', '禾', '12획', '준3급', '3ii', '희']
+        """
         path = './word_test_data_meaning.csv'
 
         # quiz_data = 전체 한자 데이터(self.hanja_data) 중 QUIZ_COUNT개 만큼 뽑은 리스트
