@@ -243,6 +243,7 @@ class ReadingTest:
 
         hanja_info_text = '\n'.join(hanja_info_list)
         print(hanja_info_text)
+        self.save_result(hanja_info_text)
 
         label_hanja_list_title = tk.Label(window, text='[시험 목록]', font=small_font, justify="left")
         label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2, sticky="w")
@@ -258,6 +259,18 @@ class ReadingTest:
     # TODO: 일부만 맞춘 경우, 정답 처리된 한자는 제외하고 오답 한자만 오답 CSV에 기록하기
     # 예: '巧言'에 대해 사용자가 '_언'을 입력한 경우 (정답: 교언)
     # → [언]은 정답 처리되고, [교]만 오답으로 간주하여 기록
+    def save_result(self, text: str):
+        SEPARATOR = '=' * 30
+        
+        cur_time = time.time()
+        time_struct = time.localtime(cur_time)  # 현재 시간 구조체로 변환
+        formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time_struct)
+        
+        with open('./word_test_result.txt', 'a') as f:
+            f.write(f"\n[{formatted_time}]\n{SEPARATOR}\n{text}\n{SEPARATOR}\n")
+        
+        print('result saved.')
+
     
     # TODO: word_test_data.csv 내용을 자주 쓰는 단어 중심으로 교체할 것
     # 기존 단어 예: 可,十丈水裏可知一丈人裏不可知,십장수리가지 일장인리불가지
