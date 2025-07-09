@@ -1,11 +1,13 @@
 # 한자 단어 독음 테스트 프로그램 구현 (25.6.24)
 
-from gui_base import *
+import csv
 import random
 import time
-import csv
-from modules.load import load_all_file_with_radical
 from collections import defaultdict
+from enum import IntEnum, auto
+
+from gui_base import *
+from modules.load import load_all_file_with_radical
 
 
 QUIZ_COUNT = 10
@@ -16,7 +18,6 @@ READING_IDX = 2
 
 # TODO: 행 인덱스 상수들을 Row(IntEnum) enum으로 정리할 예정
 # 예시: 행 인덱스 enum 구조
-from enum import IntEnum, auto
 
 class QuizScreenRow(IntEnum):
     HANJA    = 0        # 한자 단어
