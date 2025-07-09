@@ -14,25 +14,27 @@ HANJA_IDX = 0
 WORD_IDX = 1
 READING_IDX = 2
 
-ROW_HANJA = 0
-ROW_KOR = 1
-ROW_NOTI = ROW_CLOSING = 2
-ROW_INFO = ROW_RESULT = 3
-ROW_GRADE = 4
-ROW_ENTRY = ROW_TIME = 5
-ROW_PROGRESS = 6
-
 # TODO: 행 인덱스 상수들을 Row(IntEnum) enum으로 정리할 예정
 # 예시: 행 인덱스 enum 구조
-# from enum import IntEnum, auto
-# class Row(IntEnum):
-#     HANJA    = 0
-#     KOR      = auto()
-#     NOTI     = auto()
-#     INFO     = auto()
-#     MEANING  = auto()
-#     ENTRY    = auto()
-#     PROGRESS = auto()
+from enum import IntEnum, auto
+
+class QuizScreenRow(IntEnum):
+    HANJA    = 0        # 한자 단어
+    KOR      = auto()   # 단어 음 (정답)
+    NOTI     = auto()   # 정오 표시 -> 마지막엔 closing 문구
+    INFO     = auto()   # 단어의 각 한자의 훈/음 표시
+    MEANING  = auto()   # 정의
+    ENTRY    = auto()   # 입력란
+    PROGRESS = auto()   # 진행률 ex. 1/10
+
+class ResultScreenRow(IntEnum):
+    CLOSING         = 2
+    RESULT          = auto()
+    GRADE           = auto()
+    TIME            = auto()
+    TITLE           = auto()
+    RESULT_DETAIL   = auto()
+    
 
 
 class ReadingTest:
@@ -49,21 +51,17 @@ class ReadingTest:
         window.grid_columnconfigure(1, weight=1)  # Column 1 will also expand for label_new
         self.entry = tk.Entry(window)
         self.entry.bind('<Return>', self.show_text)
-        self.label_han.grid(row=ROW_HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
-        self.label_kor.grid(row=ROW_KOR, column=0, columnspan=2)
-        self.label_noti.grid(row=ROW_NOTI, columnspan=2)
-        self.label_hanja_info.grid(row=ROW_INFO, column=0, columnspan=2)
+        self.label_han.grid(row=QuizScreenRow.HANJA, column=0, columnspan=2)  # Set columnspan to 2 to span both columns
+        self.label_kor.grid(row=QuizScreenRow.KOR, column=0, columnspan=2)
+        self.label_noti.grid(row=QuizScreenRow.NOTI, columnspan=2)
+        self.label_hanja_info.grid(row=QuizScreenRow.INFO, column=0, columnspan=2)
         
         self.msg_meaning = tk.Message(window, text="", width=480, font=small_font)
-        self.msg_meaning.grid(row=ROW_INFO + 1, column=0, columnspan=2, padx=10, pady=5)
+        self.msg_meaning.grid(row=QuizScreenRow.MEANING, column=0, columnspan=2, padx=10, pady=5)
 
-        self.entry.grid(row=ROW_INFO + 2, columnspan=2)
-        self.label_index.grid(row=ROW_INFO + 3, column=0, sticky="e")  # Use sticky="e" for right-align
-        self.label_total.grid(row=ROW_INFO + 3, column=1, sticky="w")  # Use sticky="w" for left-align
-
-        # self.entry.grid(row=ROW_ENTRY, columnspan=2)
-        # self.label_index.grid(row=ROW_PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
-        # self.label_total.grid(row=ROW_PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
+        self.entry.grid(row=QuizScreenRow.ENTRY, columnspan=2)
+        self.label_index.grid(row=QuizScreenRow.PROGRESS, column=0, sticky="e")  # Use sticky="e" for right-align
+        self.label_total.grid(row=QuizScreenRow.PROGRESS, column=1, sticky="w")  # Use sticky="w" for left-align
 
         # 1817개 전체 한자 data
         self.hanja_data = self.get_hanja_data()
@@ -188,7 +186,7 @@ class ReadingTest:
     def update_labels(self):
         self.cur_idx += 1
         if self.cur_idx > 0:
-            self.entry.grid(row=ROW_ENTRY, columnspan=2)
+            self.entry.grid(row=QuizScreenRow.ENTRY, columnspan=2)
         if self.cur_idx < QUIZ_COUNT:
             han, _, _ = self.get_data()
             self.label_han.config(text=han)
@@ -209,11 +207,11 @@ class ReadingTest:
 
         # 라벨 설정 (end, 맞은 개수, 백분율, 걸린 시간)
         label_closing = tk.Label(window, text=closing_remark, font=normal_font)
-        label_closing.grid(row=ROW_CLOSING, column=0, columnspan=2)
+        label_closing.grid(row=ResultScreenRow.CLOSING, column=0, columnspan=2)
         label_result = tk.Label(window, text=res_txt, font=normal_font)
-        label_result.grid(row=ROW_RESULT, column=0, columnspan=2)
+        label_result.grid(row=ResultScreenRow.RESULT, column=0, columnspan=2)
         label_grade = tk.Label(window, text=percent_str, font=normal_font)
-        label_grade.grid(row=ROW_GRADE, column=0, columnspan=2)
+        label_grade.grid(row=ResultScreenRow.GRADE, column=0, columnspan=2)
         elasped = round(time.time() - self.start_time)
         if elasped < 60:
             time_converted = f'{elasped}초'
@@ -222,7 +220,7 @@ class ReadingTest:
             sec = elasped - (minute*60)
             time_converted = f'{minute}분 {sec}초'
         label_elasped_time = tk.Label(window, text=time_converted, font=normal_font)
-        label_elasped_time.grid(row=ROW_TIME, column=0, columnspan=2, rowspan=2)
+        label_elasped_time.grid(row=ResultScreenRow.TIME, column=0, columnspan=2, rowspan=1)
 
         # 출제된 한자 50개 + 맞음/틀림 여부 표시
         hanja_info_list = []
@@ -246,12 +244,10 @@ class ReadingTest:
         self.save_result(hanja_info_text)
 
         label_hanja_list_title = tk.Label(window, text='[시험 목록]', font=small_font, justify="left")
-        label_hanja_list_title.grid(row=ROW_TIME+2, column=0, columnspan=2, sticky="w")
+        label_hanja_list_title.grid(row=ResultScreenRow.TITLE, column=0, columnspan=2, sticky="w")
 
-        label_hanja_list = tk.Label(
-            window, text=hanja_info_text, font=small_font, justify="left", anchor="w"
-        )
-        label_hanja_list.grid(row=ROW_TIME+3, column=0, columnspan=2, sticky="w")
+        label_hanja_list = tk.Label(window, text=hanja_info_text, font=small_font, justify="left", anchor="w")
+        label_hanja_list.grid(row=ResultScreenRow.RESULT_DETAIL, column=0, columnspan=2, sticky="w")
 
        
     # TODO: 창 닫기 버튼 기능 구현
