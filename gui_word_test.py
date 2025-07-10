@@ -16,8 +16,6 @@ HANJA_IDX = 0
 WORD_IDX = 1
 READING_IDX = 2
 
-# TODO: 행 인덱스 상수들을 Row(IntEnum) enum으로 정리할 예정
-# 예시: 행 인덱스 enum 구조
 
 class QuizScreenRow(IntEnum):
     HANJA    = 0        # 한자 단어
