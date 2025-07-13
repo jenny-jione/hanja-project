@@ -1,9 +1,10 @@
 # 한자 단어 독음 테스트 프로그램 구현 (25.6.24)
 
 import csv
+import os
 import random
 import time
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from enum import IntEnum, auto
 
 from gui_base import *
@@ -255,6 +256,38 @@ class ReadingTest:
     # 예: '巧言'에 대해 사용자가 '_언'을 입력한 경우 (정답: 교언)
     # → [언]은 정답 처리되고, [교]만 오답으로 간주하여 기록
     def save_result(self, text: str):
+        wrong_hanja_file = './word_test_result_wrong_hanja.csv'
+
+        # 1. 기존 파일 읽기 + 순서 유지
+        wrong_hanja_dict = OrderedDict()
+
+        if os.path.exists(wrong_hanja_file):
+            with open(wrong_hanja_file, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                next(reader, None)  # 헤더 건너뛰기
+                for row in reader:
+                    hanja, count = row
+                    wrong_hanja_dict[hanja] = int(count)
+
+        # 2. 새로 틀린 한자 처리
+        for row in self.word_data:
+            word = row[WORD_IDX]
+            for ch in word:
+                if ch in self.wrong_result:
+                    # 이미 있던 한자는 삭제 후 맨 뒤로
+                    if ch in wrong_hanja_dict:
+                        wrong_hanja_dict[ch] += 1
+                        wrong_hanja_dict.move_to_end(ch)
+                    else:
+                        wrong_hanja_dict[ch] = 1  # 새 항목은 기본값 1로 추가됨
+
+        # 3. 파일 전체 덮어쓰기 (순서 보존)
+        with open(wrong_hanja_file, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['한자', '틀린횟수'])
+            for hanja, count in wrong_hanja_dict.items():
+                writer.writerow([hanja, count])
+
         SEPARATOR = '=' * 30
         
         cur_time = time.time()
