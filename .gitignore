@@ -7,5 +7,5 @@ server/
 /.vscode
 .DS_Store
 *.log
-word_test_data_meaning.csv
+word_test_*.csv
 word_test_result.txt
