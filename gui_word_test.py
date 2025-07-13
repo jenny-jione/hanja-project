@@ -35,7 +35,7 @@ class ResultScreenRow(IntEnum):
     RESULT_DETAIL   = auto()
     
 
-
+# TODO: 결과 화면에 단어 목록을 출력할 때 Label 대신 Message 위젯 으로 변경하기
 class ReadingTest:
     def __init__(self):
         self.cur_idx = 0
