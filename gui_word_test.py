@@ -42,8 +42,8 @@ class ReadingTest:
         self.ans = 1
         self.label_han = tk.Label(window, text=" ", anchor="w", font=large_font)
         self.label_kor = tk.Label(window, text=" ", font=normal_font)
-        self.label_hanja_info = tk.Label(window, text=" ", font=small_font)
-        self.label_noti = tk.Label(window, text='', font=normal_font)
+        self.label_hanja_info = tk.Label(window, text=" ", font=normal_font)
+        self.label_noti = tk.Label(window, text='', font=small_font)
         self.label_index = tk.Label(window, text=" ", font=small_font)
         self.label_total = tk.Label(window, text=" ", font=small_font)
         window.grid_columnconfigure(0, weight=1)  # Column 0 will expand to center-align elements
