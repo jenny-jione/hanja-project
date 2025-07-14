@@ -255,12 +255,15 @@ class ReadingTest:
     # TODO: 일부만 맞춘 경우, 정답 처리된 한자는 제외하고 오답 한자만 오답 CSV에 기록하기
     # 예: '巧言'에 대해 사용자가 '_언'을 입력한 경우 (정답: 교언)
     # → [언]은 정답 처리되고, [교]만 오답으로 간주하여 기록
-    def save_result(self, text: str):
-        wrong_hanja_file = './word_test_result_wrong_hanja.csv'
 
-        # 1. 기존 파일 읽기 + 순서 유지
+    def update_wrong_hanja_csv(self):
+        """
+        틀린 한자 정보를 기존 CSV와 병합하여 업데이트한다.
+        """
+        wrong_hanja_file = './word_test_result_wrong_hanja.csv'
         wrong_hanja_dict = OrderedDict()
 
+        # 1. 기존 데이터 읽기
         if os.path.exists(wrong_hanja_file):
             with open(wrong_hanja_file, 'r', encoding='utf-8') as f:
                 reader = csv.reader(f)
@@ -269,7 +272,7 @@ class ReadingTest:
                     hanja, count = row
                     wrong_hanja_dict[hanja] = int(count)
 
-        # 2. 새로 틀린 한자 처리
+        # 2. 새로 틀린 한자 병합
         for row in self.word_data:
             word = row[WORD_IDX]
             for ch in word:
@@ -288,16 +291,27 @@ class ReadingTest:
             for hanja, count in wrong_hanja_dict.items():
                 writer.writerow([hanja, count])
 
-        SEPARATOR = '=' * 30
-        
-        cur_time = time.time()
-        time_struct = time.localtime(cur_time)  # 현재 시간 구조체로 변환
-        formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", time_struct)
-        
-        with open('./word_test_result.txt', 'a') as f:
-            f.write(f"\n[{formatted_time}]\n{SEPARATOR}\n{text}\n{SEPARATOR}\n")
-        
-        print('result saved.')
+
+    def log_test_result(self, text):
+        """
+        결과 텍스트를 로그 파일에 남긴다.
+        """
+        result_log_file = './word_test_result.txt'
+        separator = '=' * 30
+        cur_time = time.localtime()
+        formatted_time = time.strftime("%Y-%m-%d %H:%M:%S", cur_time)
+
+        with open(result_log_file, 'a', encoding='utf-8') as f:
+            f.write(f"\n[{formatted_time}]\n{separator}\n{text}\n{separator}\n")
+
+
+    def save_result(self, text: str):
+        """
+        틀린 한자를 CSV에 저장하고, 결과 로그를 기록한다.
+        """
+        self.update_wrong_hanja_csv()
+        self.log_test_result(text)
+        print("result saved.")
 
     
     # TODO: word_test_data.csv 내용을 자주 쓰는 단어 중심으로 교체할 것
