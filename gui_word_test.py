@@ -332,5 +332,6 @@ class ReadingTest:
         return han, kor, meaning
 
 
-test_base = ReadingTest()
-window.mainloop()
+if __name__ == '__main__':
+    test_base = ReadingTest()
+    window.mainloop()
