@@ -73,6 +73,7 @@ if __name__ == '__main__':
     
     csv_file = './word_data_nw.csv'
     processed_hanja = load_processed_hanja(csv_file)
+    zero_word_hanja = []
     
     with open(csv_file, 'a', encoding='utf-8', newline='') as f:
         wr = csv.writer(f)
@@ -83,10 +84,21 @@ if __name__ == '__main__':
             
             try:
                 res = get_info(hanja)
-                for word in res:
-                    wr.writerow([hanja, word])
+                if len(res) == 0:
+                    zero_word_hanja.append(hanja)
+                else:
+                    for word in res:
+                        wr.writerow([hanja, word])
                 f.flush()
                 log(f"[{idx}/{len(hanja_list)}] Saved {hanja} ({len(res)} words)")
 
             except Exception as e:
                 log(f"[{idx}/{len(hanja_list)}] Error: {hanja} - {e}")
+
+    if zero_word_hanja:
+        with open('zero_word_hanja.csv', 'a', encoding='utf-8', newline='') as zero_f:
+            zero_wr = csv.writer(zero_f)
+            for hz in zero_word_hanja:
+                zero_wr.writerow([hz])
+
+    log(f"크롤링 결과 0개 저장된 한자 개수: {len(zero_word_hanja)}개")
