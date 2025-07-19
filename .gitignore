@@ -9,3 +9,4 @@ server/
 *.log
 word_test_*.csv
 word_test_result.txt
+*log.txt
