@@ -26,16 +26,15 @@
 import csv
 from datetime import datetime
 
-log_file = open('crawl_processed_log.txt', 'a', encoding='utf-8')
 
 def log(msg):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"[{now}] {msg}")
 
-file_name = 'word_data_nw__test'
+file_name = 'word_data_new'
 
-csv_file = './word_data_nw.csv'
-output_file = './word_data_nw_processed.csv'
+csv_file = './' + file_name + '.csv'
+output_file = './' + file_name + '_processed.csv'
 
 start_time = datetime.now()
 log(f"처리 시작: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
