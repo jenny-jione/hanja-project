@@ -31,8 +31,8 @@ log_file = open('crawl_processed_log.txt', 'a', encoding='utf-8')
 def log(msg):
     now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"[{now}] {msg}")
-    log_file.write(f"[{now}] {msg}\n")
-    log_file.flush()
+
+file_name = 'word_data_nw__test'
 
 csv_file = './word_data_nw.csv'
 output_file = './word_data_nw_processed.csv'
@@ -77,4 +77,3 @@ log(f"전체 단어 수: {total}")
 log(f"중복 제거된 단어 수: {skip_count}")
 log(f"최종 저장된 단어 수: {write_count}")
 
-log_file.close()
