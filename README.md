@@ -1,18 +1,18 @@
 ## commit message type
-- feat: 새로운 기능
-- fix: 버그 수정
-- docs: 문서 업데이트
-- style: 스타일 관련 기능 (코드 포맷팅, 세미콜론 누락, 코드 자체의 변경이 없는 경우)
-- design: 사용자 UI 디자인 변경 (CSS 등)
-- refactor: 코드 리팩토링
-- chore: 빌드 업무 수정, 패키지 매니저 수정 (.gitignore 수정 등)
-- test: 테스트 코드 추가 또는 수정
-- ci: ci구성파일 및 스크립트 변경
-- perf: 성능 개선
-- build: 시스템 또는 외부 종속성에 영향을 미치는 변경사항 (npm, gulp, yarn 레벨)
-- revert: 작업 되돌리기
-- rename: 파일 혹은 폴더명을 수정만 한 경우
-- remove: 파일을 삭제만 한 경우
+| 타입       | 설명                                            | 예시                          |
+|------------|-------------------------------------------------|-------------------------------|
+| `feat`     | 새로운 기능 추가                                 | `feat: 로그인 기능 추가`       |
+| `fix`      | 버그 수정                                       | `fix: 회원가입 오류 수정`     |
+| `docs`     | 문서 수정 (코드 변경 없음)                       | `docs: README 업데이트`        |
+| `style`    | 코드 스타일 수정 (공백, 세미콜론 등, 의미 변경 없음) | `style: 코드 포맷 정리`        |
+| `refactor` | 리팩토링 (동작 변화 없이 구조 개선)              | `refactor: 중복 로직 함수화`   |
+| `test`     | 테스트 코드 추가 또는 수정                       | `test: 로그인 테스트 추가`     |
+| `chore`    | 기타 변경 (빌드, 설정, 잡일 등)                  | `chore: 사용하지 않는 파일 삭제` |
+| `perf`     | 성능 개선                                        | `perf: 쿼리 속도 개선`         |
+| `build`    | 빌드 관련 설정 변경                              | `build: vite 설정 수정`        |
+| `ci`       | CI 관련 설정 변경                                | `ci: GitHub Actions 수정`      |
+| `revert`   | 이전 커밋 되돌리기                               | `revert: 로그인 기능 롤백`     |
+
 
 ## most used commit message
 - chore: update today's csv data content
