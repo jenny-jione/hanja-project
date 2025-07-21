@@ -58,6 +58,10 @@ with open(csv_file, 'r', encoding='utf-8') as f, \
         if hanja != prev_hanja:
             base_words = set()
             prev_hanja = hanja
+        
+        # 한글자 단어는 저장하지 않음
+        if len(word) == 1:
+            continue
 
         # base_words에 포함된 단어가 현재 word에 포함되어 있으면 중복 처리(스킵)
         if any(base_word in word for base_word in base_words):
