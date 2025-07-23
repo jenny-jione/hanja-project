@@ -7,7 +7,6 @@ from gui_word_test import ReadingTest
 
 input_file = './word_data_new_processed.csv'
 output_file = './csv/level3_words.csv'
-exclude_file = './csv/excluded_words.csv'
 
 # 3급 한자 단어 목록
 test = ReadingTest()
@@ -15,12 +14,10 @@ hanja_data = test.get_hanja_data()
 hanja_list = [h[0] for h in hanja_data]
 
 with open(input_file, 'r', encoding='utf-8') as f, \
-     open(output_file, 'w', encoding='utf-8', newline='') as f2, \
-     open(exclude_file, 'w', encoding='utf-8', newline='') as f3:
+     open(output_file, 'w', encoding='utf-8', newline='') as f2:
 
     rdr = csv.reader(f)
     wr = csv.writer(f2)
-    wr_excluded = csv.writer(f3)
 
     for row in rdr:
         if len(row) < 2:
@@ -29,7 +26,6 @@ with open(input_file, 'r', encoding='utf-8') as f, \
         hanja, word = row[0], row[1]
         
         if any(ch not in hanja_list for ch in word):
-            wr_excluded.writerow([hanja, word])
             continue  # skip if any character in word is not in the hanja list
         
         wr.writerow([hanja, word])
