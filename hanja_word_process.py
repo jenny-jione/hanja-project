@@ -23,37 +23,51 @@
 #
 # => 포함되는 단어는 제거하여 가장 기본 단어만 남김
 
+# + 加,運動 -> 같은 데이터가 있음. 等加速度 運動 에서 공백으로 분리되어서 남은듯. 이런 데이터도 삭제.
+
+
 import csv
-from datetime import datetime
+import logging
+
+# Logger 설정
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] %(levelname)s: %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
 
 
-def log(msg):
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print(f"[{now}] {msg}")
+def load_hanja_chars(file_path: str):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        rdr = csv.reader(f)
+        data = [row[0] for row in rdr]
+    return data
 
-file_name = 'word_data_new'
 
-csv_file = './' + file_name + '.csv'
-output_file = './' + file_name + '_processed.csv'
+def load_word_data(file_path: str):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        rdr = csv.reader(f)
+        data = list(rdr)
+    return data
 
-start_time = datetime.now()
-log(f"처리 시작: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
 
-with open(csv_file, 'r', encoding='utf-8') as f, \
-     open(output_file, 'w', encoding='utf-8', newline='') as f2:
+def save_to_csv(data: list, file_path: str):
+    with open(file_path, 'w', newline='', encoding='utf-8') as f:
+        wr = csv.writer(f)
+        wr.writerows(data)
+    logger.info(f"{len(data):,}개 데이터를 '{file_path}'에 저장했습니다.")
 
-    rdr = csv.reader(f)
-    wr = csv.writer(f2)
-    data = list(rdr)
 
-    total = len(data)
+def clean_and_filter(crawled_data: list):
+    logger.info("단어 정제 및 필터링 시작")
+
+    processed_data = []
+
     prev_hanja = None
     base_words = set()
 
-    skip_count = 0
-    write_count = 0
-
-    for i, (hanja, word) in enumerate(data):
+    for hanja, word in crawled_data:
         if hanja != prev_hanja:
             base_words = set()
             prev_hanja = hanja
@@ -62,21 +76,54 @@ with open(csv_file, 'r', encoding='utf-8') as f, \
         if len(word) == 1:
             continue
 
+        # 해당 한자를 포함하지 않는 단어도 저장하지 않음 (잘못 크롤링된 데이터)
+        if hanja not in word:
+            continue
+
         # base_words에 포함된 단어가 현재 word에 포함되어 있으면 중복 처리(스킵)
         if any(base_word in word for base_word in base_words):
-            skip_count += 1
             continue
 
         base_words.add(word)
-        wr.writerow([hanja, word])
-        write_count += 1
+        processed_data.append([hanja, word])
+    
+    logger.info(f"필터링 완료: {len(processed_data):,}개 단어 추출")
 
-end_time = datetime.now()
-elapsed = end_time - start_time
+    return processed_data
 
-log(f"처리 종료: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
-log(f"걸린 시간: {elapsed}")
-log(f"전체 단어 수: {total}")
-log(f"중복 제거된 단어 수: {skip_count}")
-log(f"최종 저장된 단어 수: {write_count}")
 
+def filter_level3_words(processed_data: list, hanja_list: list):
+    logger.info("3급 한자 단어 필터링 시작")
+    result = []
+
+    for row in processed_data:
+        if len(row) < 2:
+            logger.warning(f"열이 부족한 행 건너뜀: {row}")
+            continue  # skip rows with insufficient columns
+        hanja, word = row[0], row[1]
+        
+        if any(ch not in hanja_list for ch in word):
+            continue  # skip if any character in word is not in the hanja list
+        
+        result.append([hanja, word])
+
+    logger.info(f"필터링 완료: {len(result):,}개 3급 한자 단어 추출됨")
+    return result
+
+if __name__=='__main__':
+    logger.info("=== 3급 한자 단어 처리 시작 ===")
+
+    # Step 1: Load word_data.csv
+    word_data = load_word_data("./csv/word_data.csv")
+    logger.info(f"원시 데이터 로드 완료: {len(word_data):,}개")
+
+    # Step 2: 정제 및 파생어 제거
+    processed_data = clean_and_filter(word_data)
+    save_to_csv(processed_data, "./csv/word_data_processed.csv")
+
+    # Step 3: 순수 3급 한자 단어 필터링
+    hanja_chars = load_hanja_chars("./csv/hanja.csv")
+    level3_only = filter_level3_words(processed_data, hanja_chars)
+    save_to_csv(level3_only, "./csv/level3_words.csv")
+    
+    logger.info("=== 전체 처리 완료 ===")
