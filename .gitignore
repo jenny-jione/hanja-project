@@ -10,3 +10,5 @@ server/
 word_test_*.csv
 word_test_result.txt
 *log.txt
+/csv/*.txt
+/csv/*test*.*
