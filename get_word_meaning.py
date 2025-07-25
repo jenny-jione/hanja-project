@@ -63,7 +63,7 @@ if __name__ == '__main__':
 
     driver = create_driver()
 
-    with open(input_file, 'r') as f1, open(output_file, 'a', newline='') as f2:
+    with open(input_file, 'r') as f1, open(output_file, 'a', newline='', encoding='utf-8') as f2:
         rdr = csv.reader(f1)
         hanja_word_list = list(rdr)
 
