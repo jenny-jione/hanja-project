@@ -1,4 +1,4 @@
-# word_test_data.csv 파일의 한자 단어 뜻을 네이버 한자사전에서 크롤링하는 코드 (작성일: 2025.06.30)
+# ./csv/level3_words.csv 파일의 한자 단어 뜻을 네이버 한자사전에서 크롤링하는 코드 (작성일: 2025.07.23)
 
 import csv
 import os
