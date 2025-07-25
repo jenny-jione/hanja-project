@@ -1,6 +1,7 @@
 # word_test_data.csv 파일의 한자 단어 뜻을 네이버 한자사전에서 크롤링하는 코드 (작성일: 2025.06.30)
 
 import csv
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -14,11 +15,17 @@ logger = Logger()
 
 RESTART_INTERVAL = 500  # 드라이버 재시작 주기
 
-def get_start_idx(file_path):
-    with open(file_path, 'r') as f:
-        rdr = csv.reader(f)
-        data = list(rdr)
-        return len(data)
+
+def load_processed_word(csv_file):
+    processed = set()
+    if os.path.exists(csv_file):
+        with open(csv_file, newline='', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row:
+                    processed.add(row[1])
+    return processed
+
 
 def wait_means(driver, timeout=5):
     """`.mean` 요소가 최소 2개 생길 때까지 기다려 반환"""
@@ -59,13 +66,14 @@ if __name__ == '__main__':
     with open(input_file, 'r') as f1, open(output_file, 'a', newline='') as f2:
         rdr = csv.reader(f1)
         hanja_word_list = list(rdr)
-        start_idx = get_start_idx(output_file)
-        print(start_idx)
+
+        processed_word = load_processed_word(output_file)
 
         wr = csv.writer(f2)
 
-        for i, row in enumerate(hanja_word_list[start_idx:]):
-            absolute_idx = start_idx + i
+        for i, (hanja, word) in enumerate(hanja_word_list, start=1):
+            if word in processed_word:
+                continue
 
             # 일정 주기마다 드라이버 재시작
             if i > 0 and i % RESTART_INTERVAL == 0:
