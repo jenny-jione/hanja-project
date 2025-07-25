@@ -12,3 +12,6 @@ word_test_result.txt
 *log.txt
 /csv/*.txt
 /csv/*test*.*
+csv/*.csv
+!csv/hanja.csv
+!csv/csv_readme.md
