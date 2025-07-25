@@ -35,22 +35,21 @@ def wait_means(driver, timeout=5):
 
     return WebDriverWait(driver, timeout).until(_has_two_means)
 
-def get_meaning(hanja_info: list, driver: webdriver.Chrome):
-    # hanja_info: ['家', '家家禮', '가가례']
-    url = f'https://hanja.dict.naver.com/#/search?range=word&query={hanja_info[1]}'
+
+def get_meaning(word: str, driver: webdriver.Chrome):
+    url = f'{URL}={word}'
     driver.get(url)
-    # time.sleep(TIME_SLEEP)
-    # class_mean = driver.find_elements(By.CLASS_NAME, "mean")[1]
-    # meaning = class_mean.text
-    # return hanja_info + [meaning, url]
 
     try:
-        class_mean = wait_means(driver)[1]
-        meaning = class_mean.text.strip()
+        mean_elements = wait_means(driver)
+
+        reading = mean_elements[0].text.strip()
+        meaning = mean_elements[1].text.strip()
     except TimeoutException:
         # 로딩 실패/구조 변화/차단 등 예외 처리
-        meaning = ""
-    return hanja_info + [meaning, url]
+        reading, meaning = "", ""
+    return reading, meaning, url
+
 
 def create_driver():
     options = webdriver.ChromeOptions()
@@ -82,8 +81,9 @@ if __name__ == '__main__':
                 driver = create_driver()
                 logger.info(f'재시작 완료. 계속 진행 중...')
 
-            data = get_meaning(row, driver)
-            wr.writerow(data)
-            logger.info(f'{absolute_idx}/{len(hanja_word_list)} {data[1:-1]}')
+            reading, meaning, url = get_meaning(word, driver)
+            row = [hanja, word, reading, meaning, url]
+            wr.writerow(row)
+            logger.info(f'{i}/{len(hanja_word_list)} {row[1:-1]}')
 
     driver.quit()
