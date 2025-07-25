@@ -57,6 +57,7 @@ def create_driver():
     options.add_argument('headless')
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+
 if __name__ == '__main__':
     file_name = 'level3_words'
     input_file = f'./csv/{file_name}.csv'
