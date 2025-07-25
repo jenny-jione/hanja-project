@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
             # 일정 주기마다 드라이버 재시작
             if i > 0 and i % RESTART_INTERVAL == 0:
-                logger.info(f'{absolute_idx}개 처리 완료 — 크롬 드라이버 재시작 중...')
+                logger.info(f'크롬 드라이버 재시작 중...')
                 driver.quit()
                 driver = create_driver()
                 logger.info(f'재시작 완료. 계속 진행 중...')
