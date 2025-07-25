@@ -13,6 +13,7 @@ from selenium.common.exceptions import TimeoutException
 
 logger = Logger()
 
+URL = 'https://hanja.dict.naver.com/#/search?range=word&query'
 RESTART_INTERVAL = 500  # 드라이버 재시작 주기
 
 
