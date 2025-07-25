@@ -57,8 +57,9 @@ def create_driver():
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 if __name__ == '__main__':
-    input_file = './word_test_data.csv'
-    output_file = './word_test_data_meaning.csv'
+    file_name = 'level3_words'
+    input_file = f'./csv/{file_name}.csv'
+    output_file = f'./csv/{file_name}_meaning.csv'
 
     driver = create_driver()
 
