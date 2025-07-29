@@ -59,7 +59,7 @@ def create_driver():
 
 
 if __name__ == '__main__':
-    file_name = 'level3_words'
+    file_name = 'word_data_3_unique_words'
     input_file = f'./csv/{file_name}.csv'
     output_file = f'./csv/{file_name}_meaning.csv'
 
