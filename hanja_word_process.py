@@ -124,13 +124,20 @@ def extract_unique_words(data: list[str]) -> list[str]:
 if __name__=='__main__':
     logger.info("=== 3급 한자 단어 처리 시작 ===")
 
+    file_name = 'word_data'
+    csv_dir = './csv'
+    input_file = f'{csv_dir}/{file_name}.csv'
+    output_file = f'{csv_dir}/{file_name}_1_processed.csv'
+    output_file2 = f'{csv_dir}/{file_name}_2_level3_words.csv'
+    output_file3 = f'{csv_dir}/{file_name}_3_unique_words.csv'
+
     # Step 1: Load word_data.csv
-    word_data = load_word_data("./csv/word_data.csv")
+    word_data = load_word_data(input_file)
     logger.info(f"원시 데이터 로드 완료: {len(word_data):,}개")
 
     # Step 2: 정제 및 파생어 제거
     processed_data = clean_and_filter(word_data)
-    save_to_csv(processed_data, "./csv/word_data_processed.csv")
+    save_to_csv(processed_data, output_file)
 
     # Step 3: 순수 3급 한자 단어 필터링
     hanja_chars = load_hanja_chars("./csv/hanja.csv")
