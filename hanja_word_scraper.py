@@ -79,7 +79,13 @@ def get_info(hanja: str):
     for kw in keywords:
         res = find_content_after_span(soup, kw)
         result.extend(res)
-    all_terms = list(set(result))
+    # result의 순서를 유지하면서 중복 제거
+    seen = set()
+    all_terms = []
+    for term in result:
+        if term not in seen:
+            seen.add(term)
+            all_terms.append(term)
 
     # 필터링: hanja가 포함된 단어만 유지
     filtered_terms = [term for term in all_terms if hanja in term and len(term)>1]
