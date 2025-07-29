@@ -24,7 +24,7 @@ def load_processed_word(csv_file):
             reader = csv.reader(f)
             for row in reader:
                 if row:
-                    processed.add(row[1])
+                    processed.add(row[0])
     return processed
 
 
@@ -73,7 +73,8 @@ if __name__ == '__main__':
 
         wr = csv.writer(f2)
 
-        for i, (hanja, word) in enumerate(hanja_word_list, start=1):
+        for i, row in enumerate(hanja_word_list, start=1):
+            word = row[0]
             if word in processed_word:
                 continue
 
