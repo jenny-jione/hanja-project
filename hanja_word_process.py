@@ -110,6 +110,17 @@ def filter_level3_words(processed_data: list, hanja_list: list):
     logger.info(f"필터링 완료: {len(result):,}개 3급 한자 단어 추출됨")
     return result
 
+
+def extract_unique_words(data: list[str]) -> list[str]:
+    seen = set()
+    unique_words = []
+    for _, word in data:
+        if word not in seen:
+            seen.add(word)
+            unique_words.append(word)
+    return unique_words
+
+
 if __name__=='__main__':
     logger.info("=== 3급 한자 단어 처리 시작 ===")
 
@@ -124,6 +135,11 @@ if __name__=='__main__':
     # Step 3: 순수 3급 한자 단어 필터링
     hanja_chars = load_hanja_chars("./csv/hanja.csv")
     level3_only = filter_level3_words(processed_data, hanja_chars)
-    save_to_csv(level3_only, "./csv/level3_words.csv")
+    save_to_csv(level3_only, output_file2)
+
+    # Step 4: 중복 단어 제거
+    unique_words = extract_unique_words(level3_only)
+    unique_word_rows = [[word] for word in unique_words]
+    save_to_csv(unique_word_rows, output_file3)
     
     logger.info("=== 전체 처리 완료 ===")
