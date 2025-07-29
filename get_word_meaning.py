@@ -28,7 +28,7 @@ def load_processed_word(csv_file):
     return processed
 
 
-def wait_means(driver, timeout=5):
+def wait_means(driver, timeout=2):
     """`.mean` 요소가 최소 2개 생길 때까지 기다려 반환"""
     def _has_two_means(drv):
         elems = drv.find_elements(By.CLASS_NAME, "mean")
