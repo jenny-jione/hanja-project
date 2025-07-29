@@ -70,8 +70,11 @@ if __name__ == '__main__':
         hanja_word_list = list(rdr)
 
         processed_word = load_processed_word(output_file)
+        logger.info(f'이미 처리된 단어 개수: {len(processed_word)}')
 
         wr = csv.writer(f2)
+        logger.info("=== 단어 크롤링 시작 ===")
+
 
         for i, row in enumerate(hanja_word_list, start=1):
             word = row[0]
@@ -85,9 +88,16 @@ if __name__ == '__main__':
                 driver = create_driver()
                 logger.info(f'재시작 완료. 계속 진행 중...')
 
-            reading, meaning, url = get_meaning(word, driver)
-            row = [hanja, word, reading, meaning, url]
-            wr.writerow(row)
-            logger.info(f'{i}/{len(hanja_word_list)} {row[1:-1]}')
+            try:
+                reading, meaning, url = get_meaning(word, driver)
+                row = [word, reading, meaning, url]
+                wr.writerow(row)
+
+                display_reading = reading if reading else "N/A"
+                logger.info(f'[{i}/{len(hanja_word_list)}] 처리 중... {word} {display_reading}')
+
+            except Exception as e:
+                logger.error(f'[{i}] {word} 처리 중 오류 발생: {e}')
 
     driver.quit()
+    logger.info("=== 크롤링 완료 ===")
